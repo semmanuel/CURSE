@@ -75,7 +75,7 @@ CREDITS		INT		NOT NULL)
 ;"""
 # execute the statement
 cursor.execute(sql_command)
-
+####################################################################
 # SQL command to create a table in the database
 sql_command = """CREATE TABLE ROSTER (
 CRN 		INT 	NOT NULL,
@@ -86,7 +86,34 @@ UNIQUE (CRN, ID))
 ;"""
 # execute the statement
 cursor.execute(sql_command)
+###################################################################
+# Portion from now on describes the SCHEDULE DATABASE, implementation RB
+sql_command = """CREATE TABLE SCHEDULE (  
+TITLE			TEXT 					NOT NULL,
+CRN				CHAR(4)	PRIMARY KEY		NOT NULL,
+DEPT			TEXT 					NOT NULL,
+INSTRUCTOR		TEXT 					NOT NULL,
+TIME			TEXT 					NOT NULL,
+DAYS_OF_WEEK	TEXT					NOT NULL,
+SEMESTER		TEXT					NOT NULL,
+CREDITS			TEXT					NOT NULL)
+;"""
+# create table
+cursor.execute(sql_command)
+###################################################################
+sql_command = """CREATE TABLE INSTRUCTOR_SCHEDULE (  
+TITLE			TEXT 					NOT NULL,
+CRN				CHAR(4)	PRIMARY KEY		NOT NULL,
+DEPT			TEXT 					NOT NULL,
+INSTRUCTOR		TEXT 					NOT NULL,
+TIME			TEXT					NOT NULL,
+DAYS_OF_WEEK	TEXT					NOT NULL,
+SEMESTER		TEXT					NOT NULL,
+CREDITS			TEXT					NOT NULL)
+;"""
 
+cursor.execute(sql_command)
+###################################################################
 # Student list
 cursor.execute("""INSERT INTO STUDENT VALUES(00010001, 'Isaac', 'Newton', 1668, 'BSAS', 'newtoni');""")
 cursor.execute("""INSERT INTO STUDENT VALUES(00010002, 'Marie', 'Curie', 1903, 'BSAS', 'curiem');""")
@@ -130,6 +157,31 @@ cursor.execute(
     """INSERT INTO COURSE VALUES('ELEC3250', 567890, 'BSCO', 'TBD', '1:00-3:50PM', 'WF', 'Spring', 2020, 3);""")
 cursor.execute(
     """INSERT INTO COURSE VALUES('ELEC4500', 982543, 'BSME', 'TBD', '2:00-2:50PM', 'MT', 'Fall', 2019, 4);""")
+
+# Schedule
+cursor.execute(
+  """INSERT INTO SCHEDULE VALUES('Rewrite Everything With Sin Functions ', 							'31798', 	'BSEE', 	'Joseph Fourier',     '12:00 pm - 12:50pm',		'MTR',	'Summer 2020',	'4 Credits');""")
+cursor.execute(
+  """INSERT INTO SCHEDULE VALUES('A Winner Is a Dreamer Who Never Gives Up',   					'31039', 	'HUSS', 	'Nelson Mandela', 		'10:00 am - 12:50 pm', 	'TR',		'Summer 2020',	'4 Credits');""")
+cursor.execute(
+  """INSERT INTO SCHEDULE VALUES('Become the Father of Observational Astronomy', 				'31748', 	'BSAS', 	'Galileo Galilei',     '9:30  am - 10:50 am',  'WF',		'Summer 2020',	'4 Credits');""")
+cursor.execute(
+  """INSERT INTO SCHEDULE VALUES('Cryptanalysis: Send Me a Message I Cant Decrypt',			'31431', 	'BSCO',		'Alan Turing',				'11:00 am - 12:20 pm',	'WF',		'Summer 2020',	'4 Credits');""")
+cursor.execute(
+  """INSERT INTO SCHEDULE VALUES('Black Holes Imagery:Getting Yall Out of The Dark',		  '31739',	'BCOS',		'Katie Bouman',				'1:00 pm - 2:50 pm',		'MF',		'Summer 2020',	'4 Credits');""")
+
+# Instructor Schedule
+cursor.execute(
+  """INSERT INTO INSTRUCTOR_SCHEDULE VALUES('Rewrite Everything With Sin Functions ', 							'31798', 	'BSEE', 	'Joseph Fourier',     '12:00 pm - 12:50pm',		'MTR',	'Summer 2020',	'4 Credits');""")
+cursor.execute(
+  """INSERT INTO INSTRUCTOR_SCHEDULE VALUES('A Winner Is a Dreamer Who Never Gives Up',   					'31039', 	'HUSS', 	'Nelson Mandela', 		'10:00 am - 12:50 pm', 	'TR',		'Summer 2020',	'4 Credits');""")
+cursor.execute(
+  """INSERT INTO INSTRUCTOR_SCHEDULE VALUES('Become the Father of Observational Astronomy', 				'31748', 	'BSAS', 	'Galileo Galilei',     '9:30  am - 10:50 am',  'WF',		'Summer 2020',	'4 Credits');""")
+cursor.execute(
+  """INSERT INTO INSTRUCTOR_SCHEDULE VALUES('Cryptanalysis: Send Me a Message I Cant Decrypt',			'31431', 	'BSCO',		'Alan Turing',				'11:00 am - 12:20 pm',	'WF',		'Summer 2020',	'4 Credits');""")
+cursor.execute(
+  """INSERT INTO INSTRUCTOR_SCHEDULE VALUES('Black Holes Imagery:Getting Yall Out of The Dark',		'31739',	'BCOS',		'Katie Bouman',				'1:00 pm - 2:50 pm',		'MF',		'Summer 2020',	'4 Credits');""")
+database.commit()
 
 # QUERY FOR ALL
 print("Entire Student table")
@@ -269,7 +321,7 @@ class User:
     def searchallCourses(self):
         print("This is the search all courses function")
         print("All Available Course Titles and Corresponding CRNs")
-        cursor.execute("""SELECT TITLE, CRN FROM COURSE""")
+        cursor.execute("""SELECT * FROM COURSE""")
         query_result = cursor.fetchall()
         for i in query_result:
             print(i)
@@ -280,13 +332,175 @@ class Student(User):
         super().__init__(fname, lname, idNum)
 
     def searchCourses(self):
-        print("This is the search courses function")
+        print('You are searching for courses.')
+        print(
+            'Here are the parameters one can search for course: title, crn, dept, instructor, time, days of the week, semester, credits  ')
+        param = input('Which parameter you want to search by:')
+        param = param.upper()  # make sure the user input will always match comparison
+        while True:
+            if param == "TITLE":
+                user_input = input('Enter Title of the course')
+                cursor.execute(''' SELECT * 
+                                 FROM COURSES
+                                 WHERE TITLE=%s );''' % (user_input))
+                query_result = cursor.fetchall()
+                print('Printing the query result')
+                for i in query_result:
+                    print(i)
+
+            elif param == "CRN":
+                user_input = input('Enter CRN of the course')
+                cursor.execute('''  SELECT * 
+                                 FROM COURSES
+                                 WHERE CRN=%s );''' % (user_input))
+                query_result = cursor.fetchall()
+                print('Printing the query result')
+                for i in query_result:
+                    print(i)
+
+            elif param == "DEPT":
+                (user_input) = ('Enter Department of the course')
+                cursor.execute('''  SELECT * 
+                                 FROM COURSES
+                                 WHERE DEPT=%s );''' % (user_input))
+                query_result = cursor.fetchall()
+                print('Printing the query result')
+                for i in query_result:
+                    print(i)
+
+            elif param == "INSTRUCTOR":
+                user_input = input('Enter Instructor of the course')
+                cursor.execute('''  SELECT * 
+                                 FROM COURSES
+                                 WHERE INSTRUCTOR=%s );''' % (user_input))
+                query_result = cursor.fetchall()
+                print('Printing the query result')
+                for i in query_result:
+                    print(i)
+
+            elif param == "TIME":
+                user_input = input('Enter Time of the course')
+                cursor.execute('''  SELECT * 
+                                 FROM COURSES
+                                 WHERE TIME=%s );''' % (user_input))
+                query_result = cursor.fetchall()
+                print('Printing the query result')
+                for i in query_result:
+                    print(i)
+
+            elif param == "DAYS_OF_WEEK":
+                user_input = input('Enter Days of Week of the course')
+                cursor.execute('''  SELECT * 
+                                 FROM COURSES
+                               WHERE DAYS_OF_WEEK=%s);''' % (user_input))
+                query_result = cursor.fetchall()
+                print('Printing the query result')
+                for i in query_result:
+                    print(i)
+
+            elif param == "SEMESTER":
+                user_input = input('Enter Semester of the course')
+                cursor.execute('''  SELECT * 
+                                 FROM COURSES
+                           WHERE SEMESTER=%s );''' % (user_input))
+                query_result = cursor.fetchall()
+                print('Printing the query result')
+                for i in query_result:
+                    print(i)
+
+            elif param == "CREDITS":
+                user_input = input('Enter CRN of the course')
+                cursor.execute('''  SELECT * 
+                                 FROM COURSES
+                             WHERE CREDITS=%s );''' % (user_input))
+                query_result = cursor.fetchall()
+                print('Printing the query result')
+                for i in query_result:
+                    print(i)
+
+            else:
+                print('The parameter has to match with the options. Please try again or quit.')
+            database.commit()
+            break
 
     def add_dropCourse(self):
-        print("This is the add/drop courses function")
+        # Add or drop courses as a student, depending on crn_parameter
+        print('You can add or drop courses.')
+        print('Use the crn, to add or drop course')
+        ch = input('Will you 0) add or 1) drop course or q) quit :')
+
+        if ch == '0':
+            user_input = input('Add the course CRN:')
+            while True:
+                if len(
+                        user_input) == 4 & user_input.isdigit():  # crn cannot be greater that 4 digits nor can it include other characters but numbers
+                    cursor.execute('''  SELECT * 
+                                 FROM COURSES
+                                 WHERE CRN=%s);''' % (user_input))
+                    query_result = cursor.fetchone()  # always fetching one rather than all with the assumption that there is no repeating CRN, so if it exists it will only once
+                    cursor.execute('''  SELECT * 
+                               FROM SCHEDULE
+                               WHERE CRN=%s);''' % (user_input))
+                    query_result1 = cursor.fetchone()
+                    if query_result != query_result1:
+                        cursor.execute('''  SELECT * 
+                                 FROM COURSES, SCHEDULE
+                                 WHERE COURSES.TIME = SCHEDULE.TIME AND COURSES.DAYS_OF_WEEK = SCHEDULE=DAYS_OF_WEEK);''')
+                        query_result2 = cursor.fetchone()
+                        if query_result2 != None:
+                            for i in query_result():
+                                sql_command = """INSERT INTO SCHEDULE VALUES(TITLE,CRN, DEPT,INSTRUCTOR, TIME, DAYS_OF_WEEK, SEMESTER, CREDITS) VALUES(%s,%s,%s,%s,%s,%s)"""
+                                cursor.executemany(sql_command, query_result)
+                        else:
+                            print('You have a time conflict')
+                            cursor.execute("""SELECT * 
+                                 FROM COURSES, SCHEDULE
+                                 WHERE COURSES.TIME = SCHEDULE.TIME AND COURSES.DAYS_OF_WEEK = SCHEDULE = AYS_OF_WEEK);""")
+                            query_result = cursor.fetchall()
+                            for i in query_result:
+                                print(i)
+
+                    else:
+                        print('You have already registered for the class with CRN:%s' % user_input)
+                else:
+                    print('The CRN should only be digits and be 4 : %s' % user_input)
+
+        elif ch == '1':
+            user_input = input('Remove the course CRN:')
+            if len(user_input) == 4 & user_input.isdigit():
+                cursor.execute('''  SELECT * 
+                                FROM COURSES
+                                WHERE CRN=%s);''' % (user_input))
+                query_result = cursor.fetchone()
+                cursor.execute('''  SELECT * 
+                               FROM SCHEDULE
+                               WHERE CRN=%s);''' % (user_input))
+
+                query_result1 = cursor.fetchone()
+                if query_result == query_result1:
+                    for i in query_result():
+                        sql_command = """DELETE FROM SCHEDULE VALUES(TITLE,CRN, DEPT,INSTRUCTOR, TIME, DAYS_OF_WEEK, SEMESTER, CREDITS) VALUES(%s,%s,%s,%s,%s,%s)"""
+                        cursor.executemany(sql_command, query_result)
+                else:
+                    print('You are not registered for the class with CRN:%s' % user_input)
+            else:
+                print('The CRN should only be digits and be 4 : %s' % user_input)
+
+        elif ch == 'q' or ch == 'Q':
+            pass
+        else:
+            print('Only options are 1)add 2)remove q)quit')
 
     def printSched(self):
-        print("This is the print schedule function")
+        cursor.execute("""SELECT * SCHEDULE""")
+        query_result = cursor.fetchall()
+        if query_result != []:
+            for i in query_result:
+                print(i)
+        else:
+            print('There are no courses in the schedule')
+
+    '''Printing all the courses schedule present in the database'''
 
 class Admin(User):
     def __init__(self, fname, lname, idNum):
@@ -366,7 +580,15 @@ class Instructor(User):
             print("No Roster found")
 
     def printSchedule(self):
-        print("This is the print schedule function")
+        cursor.execute("""SELECT * SCHEDULE""")
+        query_result = cursor.fetchall()
+        if query_result != []:
+            for i in query_result:
+                print(i)
+        else:
+            print('There are no courses in the schedule')
+
+    '''Printing all the courses schedule present in the database'''
 
     def searchCourses(self):
         print("This is the print course function")
