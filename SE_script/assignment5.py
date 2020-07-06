@@ -552,7 +552,6 @@ class Curse_admin(Curse_people):
 
 
 
-
 def main():
   # Invoke main
   print('Welcome to CURSE! What would you like to do?')
@@ -598,8 +597,6 @@ def main():
       Curse_admin.f_add_vs_drop_course()
     elif(option =='2'):
       Curse_admin.add_removeCourse()
-
-
 
 
 #executing the code
