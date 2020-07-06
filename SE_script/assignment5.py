@@ -11,7 +11,8 @@ sql_command = """CREATE TABLE USER (
 ID		INT 	PRIMARY KEY 	NOT NULL,
 EMAIL	    TEXT	NOT NULL,
 USERNAME	TEXT	NOT NULL,
-PASSWORD	TEXT	NOT NULL)
+PASSWORD	TEXT	NOT NULL,
+TYPE        TEXT    NOT NULL)
 ;"""
 
 # execute the statement
@@ -226,6 +227,7 @@ class User:
             authorization = False
             acct = input("Is this your first time logging in(Y/N)? ")
             if acct == "Y":
+                type = input("Are you student, instructor or admin?")
                 email = input("Enter your email address? ")
                 id = input("Enter your ID Number? ")
                 username = input("Create a username: ")
@@ -234,7 +236,7 @@ class User:
                     pw = getpass.getpass(prompt="Re-enter your password: ", stream=None)
                     if password == pw:
                         cursor.execute(
-                            """INSERT INTO USER VALUES('%s', '%s','%s', '%s');""" % (id, email, username, password))
+                            """INSERT INTO USER VALUES('%s', '%s','%s', '%s','%s');""" % (id, email, username, password, type))
                         print("Account successfully created")
                         return authorization is True
                     elif password != pw:
@@ -290,26 +292,40 @@ class Admin(User):
         super().__init__(fname, lname, idNum)
 
     def add_removeCourse(self):
-        type = input("Would you like to add or remove a course(1 to add, 2 to remove)? ")
-        if type == "1":
-            title = input("Course Title: ")
-            crn = input("Course CRN #: ")
-            dept = input("Course Department: ")
-            prof = input("Course Professor Name: ")
-            time = input("Course time(e.g 2:00-2:50PM): ")
-            days = input("Course days of the week(Letters only): ")
-            semester = input("Course Semester: ")
-            year = input("Course Year: ")
-            credit = input("Credits of Course:")
+        while True:
+            print("confirm credentials for admin use")
+            username = input("Enter your username: ")
+            password = getpass.getpass(prompt="Enter your password: ", stream=None)
+            # Query for login
             cursor.execute(
-                """INSERT INTO COURSE VALUES('%s', '%s', '%s', '%s','%s', '%s', '%s','%s', '%s');""" % (
-                title, crn, dept, prof, time, days, semester, year, credit))
-        elif type == "2":
+                """SELECT ID FROM USER WHERE USERNAME = ('%s') AND PASSWORD = ('%s') AND TYPE = 'admin';""" % (username, password))
+            query_result = cursor.fetchall()
             try:
-                courseId = input("Enter the CRN for the course that you would like to remove: ")
-                cursor.execute("""DELETE FROM COURSE WHERE CRN= """ + str(courseId))
-            except sqlite3.OperationalError:
-                print("Course does not exist")
+                if query_result[0] != 0:
+                    ans = input("Would you like to add or remove a course(1 to add, 2 to remove)? ")
+                    if ans == "1":
+                        title = input("Course Title: ")
+                        crn = input("Course CRN #: ")
+                        dept = input("Course Department: ")
+                        prof = input("Course Professor Name: ")
+                        time = input("Course time(e.g 2:00-2:50PM): ")
+                        days = input("Course days of the week(Letters only): ")
+                        semester = input("Course Semester: ")
+                        year = input("Course Year: ")
+                        credit = input("Credits of Course:")
+                        cursor.execute(
+                            """INSERT INTO COURSE VALUES('%s', '%s', '%s', '%s','%s', '%s', '%s','%s', '%s');""" % (
+                                title, crn, dept, prof, time, days, semester, year, credit))
+                    elif ans == "2":
+                        try:
+                            courseId = input("Enter the CRN for the course that you would like to remove: ")
+                            cursor.execute("""DELETE FROM COURSE WHERE CRN= """ + str(courseId))
+                        except sqlite3.OperationalError:
+                            print("Course does not exist")
+                break
+            except IndexError:
+                print("Authorization failed")
+
 
     def add_removeUser(self):
         print("This is the remove user function")
@@ -337,7 +353,7 @@ class Instructor(User):
     def printRoster(self):
         crn = input("Enter CRN to print Roster: ")
         cursor.execute(
-            """SELECT ROSTER.ID, STUDENT.NAME FROM ROSTER,STUDENT WHERE ROSTER.ID= STUDENT.ID AND ROSTER.CRN= (%s);""" %(crn))
+            """SELECT ROSTER.ID, STUDENT.NAME, STUDENT.SURNAME FROM ROSTER,STUDENT WHERE ROSTER.ID= STUDENT.ID AND ROSTER.CRN= (%s) ORDER BY STUDENT.NAME;""" %(crn))
         # Check for Roster
         query_result = cursor.fetchall()
         try:
@@ -393,18 +409,17 @@ def main():
     print(student1.lastName)
     student1.searchallCourses()
     student1.printAll()
-'''
+
     instructor1 = Instructor("Aaron", "Carpenter", 456789)
     instructor1.assembleRoster()
     instructor1.printRoster()
 
-    '''
     admin1 = Admin("Michael", "Jordan", 232323)
     #admin1.add_removeUser()
-    admin1.add_removeCourse()
-    admin1.searchallCourses()'''
+    admin1.add_removeCourse()'''
     admin1 = Admin("Michael", "Jordan", 232323)
     admin1.login()
+    admin1.add_removeCourse()
 
 
 if __name__ == "__main__":
