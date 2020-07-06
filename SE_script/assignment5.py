@@ -587,9 +587,15 @@ class Instructor(User):
 def login():
     while True:
         acct = input("Is this your first time logging in(Y/N)? ")
+        acct = acct.upper()
         if acct == "Y":
-            type = input("Are you student, instructor or admin?")
-            type = type.upper()
+            while True:
+                type = input("Are you student, instructor or admin?")
+                type = type.upper()
+                if type == 'STUDENT' or type == 'INSTRUCTOR' or type == 'ADMIN':
+                    break
+                elif type != 'STUDENT' or type != 'INSTRUCTOR' or type != 'ADMIN':
+                    print("Invalid argument")
             fname = input("Enter your first name? ")
             lname = input("Enter your last name? ")
             email = input("Enter your email address? ")
