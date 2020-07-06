@@ -228,6 +228,7 @@ class User:
             acct = input("Is this your first time logging in(Y/N)? ")
             if acct == "Y":
                 type = input("Are you student, instructor or admin?")
+                type = type.upper()
                 email = input("Enter your email address? ")
                 id = input("Enter your ID Number? ")
                 username = input("Create a username: ")
@@ -298,7 +299,7 @@ class Admin(User):
             password = getpass.getpass(prompt="Enter your password: ", stream=None)
             # Query for login
             cursor.execute(
-                """SELECT ID FROM USER WHERE USERNAME = ('%s') AND PASSWORD = ('%s') AND TYPE = 'admin';""" % (username, password))
+                """SELECT ID FROM USER WHERE USERNAME = ('%s') AND PASSWORD = ('%s') AND TYPE = 'ADMIN';""" % (username, password))
             query_result = cursor.fetchall()
             try:
                 if query_result[0] != 0:
@@ -414,7 +415,7 @@ def main():
     instructor1.assembleRoster()
     instructor1.printRoster()
 
-    admin1 = Admin("Michael", "Jordan", 232323)
+    #admin1 = Admin("Michael", "Jordan", 232323)
     #admin1.add_removeUser()
     admin1.add_removeCourse()'''
     admin1 = Admin("Michael", "Jordan", 232323)
