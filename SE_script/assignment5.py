@@ -282,19 +282,6 @@ class User:
         print("Last Name:" + self.lastName)
         print("ID Number:" + self.iD)
 
-    def searchallCourses(self):
-        print("This is the search all courses function")
-        print("All Available Course Titles and Corresponding CRNs")
-        cursor.execute("""SELECT * FROM COURSE""")
-        query_result = cursor.fetchall()
-        for i in query_result:
-            print(i)
-
-
-class Student(User):
-    def __init__(self, fname, lname, idNum):
-        super().__init__(fname, lname, idNum)
-
     def searchCourses(self):
         print('You are searching for courses.')
         print(
@@ -386,6 +373,19 @@ class Student(User):
                 print('The parameter has to match with the options. Please try again or quit.')
             database.commit()
             break
+
+    def searchallCourses(self):
+        print("This is the search all courses function")
+        print("All Available Course Titles and Corresponding CRNs")
+        cursor.execute("""SELECT * FROM COURSE""")
+        query_result = cursor.fetchall()
+        for i in query_result:
+            print(i)
+
+
+class Student(User):
+    def __init__(self, fname, lname, idNum):
+        super().__init__(fname, lname, idNum)
 
     def add_dropCourse(self):
         # Add or drop courses as a student, depending on crn_parameter
@@ -554,8 +554,7 @@ class Instructor(User):
 
     '''Printing all the courses schedule present in the database'''
 
-    def searchCourses(self):
-        print("This is the print course function")
+
     def assembleRoster(self):
         while True:
             crn = input("Enter the crn to Create Course Roster: ")
@@ -590,7 +589,7 @@ def login():
         acct = acct.upper()
         if acct == "Y":
             while True:
-                type = input("Are you student, instructor or admin?")
+                type = input("Are you student, instructor or admin? ")
                 type = type.upper()
                 if type == 'STUDENT' or type == 'INSTRUCTOR' or type == 'ADMIN':
                     break
@@ -665,64 +664,79 @@ def main():
 
     #admin1.add_removeCourse()
 
-    print('Welcome to CURSE! What would you like to do?')
-    print('Please log in:')
-    first_name, last_name, idNumber, TYPE = login()
+    print('Welcome to CURSE!')
+    while True:
+        print('Please log in:')
+        first_name, last_name, idNumber, TYPE = login()
+        if TYPE == 'STUDENT':
+            student = Student(first_name, last_name, idNumber)
+            while True:
+                option = input(
+                    'Would you like to: 1)add or drop course, 2) search course by parameter 3) print schedule 4) search all courses 5) Log Out: ')
 
-    if TYPE == 'STUDENT':
-        student = Student(first_name, last_name, idNumber)
-        while True:
-            option = input(
-                'Would you like to: 1)add or drop course, 2) search course 3) print schedule 4) search all courses 5) Log Out: ')
+                if option == '1':
+                    student.add_dropCourse()
+                elif option == '2':
+                    student.searchCourses()
+                elif option == '3':
+                    student.printSched()
+                elif option == '4':
+                    student.searchallCourses()
+                elif option == '5':
+                    print("Thank you using CURSE!")
+                    break
+                elif option != '1' or option != '2' or option != '3' or option != '4' or option != '5':
+                    option = input('Invalid numbering try again:')
 
-            if option == '1':
-                student.add_dropCourse()
-            elif option == '2':
-                student.searchCourses()
-            elif option == '3':
-                student.printSched()
-            elif option == '4':
-                student.searchallCourses()
-            elif option == '5':
-                print("Thank you using CURSE!")
-                break
-            elif option != '1' or option != '2' or option != '3' or option != '4' or option != '5':
-                option = input('Invalid numbering try again:')
+        elif (TYPE == 'INSTRUCTOR'):
+            instructor = Instructor(first_name, last_name, idNumber)
+            while True:
+                option = input('Would you like to 1) print schedule, 2) print roster, 3) assemble roster 4) Search all courses 5) Search Course by parameter 6) Log out: ')
 
-    elif (TYPE == 'INSTRUCTOR'):
-        instructor = Instructor(first_name, last_name, idNumber)
-        while True:
-            option = input('Would you like to 1) print schedule, 2) print roster, 3) assemble roster 4) Log out: ')
+                if option == '1':
+                    instructor.printSchedule()
+                elif option == '2':
+                    instructor.printRoster()
+                elif option == '3':
+                    instructor.assembleRoster()
+                elif option == '4':
+                    instructor.searchallCourses()
+                elif option == '5':
+                    instructor.searchCourses()
+                elif option == '6':
+                    print("Thank you using CURSE!")
+                    break
+                elif option != '1' or option != '2' or option != '3' or option != '4' or option != '5' or option != '6':
+                    option = input('Invalid numbering try again:')
 
-            if option == '1':
-                instructor.printSchedule()
-            elif option == '2':
-                instructor.printRoster()
-            elif option == '3':
-                instructor.assembleRoster()
-            elif option == '4':
-                print("Thank you using CURSE!")
-                break
-            elif option != '1' or option != '2' or option != '3' or option != '4':
-                option = input('Invalid numbering try again:')
+        elif (TYPE == 'ADMINISTRATOR'):
+            admin = Admin(first_name, last_name, idNumber)
+            while True:
+                option = input('Would you like to: 1)add or drop course, 2)add or remove course from the system, 3) Search all courses 4) Search Course by parameter 5) Log Out')
+                if (option == '1'):
+                    admin.add_removeCourse()
+                elif (option == '2'):
+                    admin.add_removeCourse()
+                elif option == '3':
+                    admin.searchallCourses()
+                elif option == '4':
+                    admin.searchCourses()
+                elif option == '5':
+                    print("Thank you using CURSE!")
+                    break
+                elif option != '1' or option != '2' or option != '3' or option != '4' or option != '5':
+                    option = input('Invalid numbering try again:')
 
-    elif (TYPE == 'ADMINISTRATOR'):
-        admin = Admin(first_name, last_name, idNumber)
-        while True:
-            option = input('Would you like to: 1)add or drop course, 2)add or remove course from the system, 3) Log Out')
-            if (option == '1'):
-                admin.add_removeCourse()
-            elif (option == '2'):
-                admin.add_removeCourse()
-            elif option == '3':
-                print("Thank you using CURSE!")
-                break
-            elif option != '1' or option != '2' or option != '3':
-                option = input('Invalid numbering try again:')
+        elif TYPE != 'STUDENT' or TYPE != 'INSTRUCTOR' or TYPE != 'ADMINISTRATOR':
+            print(TYPE, 'is invalid. Try again')
 
-    elif TYPE != 'STUDENT' or TYPE != 'INSTRUCTOR' or TYPE != 'ADMINISTRATOR':
-        print(TYPE, 'is invalid. Try again')
-
+        choice = input("Would you like to log back in?(Y/N) ")
+        choice = choice.upper()
+        if choice == 'Y':
+            pass
+        elif choice == 'N':
+            break
+            
 if __name__ == "__main__":
     main()
 
