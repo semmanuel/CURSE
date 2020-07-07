@@ -567,6 +567,7 @@ class Instructor(User):
                     print("Course Found")
                     while True:
                         studid= input("Enter iD of Student you would like to add to roster?(Q to quit)")
+                        studid= studid.upper()
                         if studid == "Q":
                             break
                         else:
@@ -638,32 +639,6 @@ def login():
             print("Invalid Argument")
 
 def main():
-
-    '''
-    # User Interface
-    print("Hello, Welcome to the CURSE Program")
-    firstname = input("What is your first name?")
-    lastname = input("What is your last name?")
-    ident = input("What is your ID Number?")
-
-    student1 = Student(firstname, lastname, ident)
-    print(student1.lastName)
-    student1.searchallCourses()
-    student1.printAll()
-
-    instructor1 = Instructor("Aaron", "Carpenter", 456789)
-    instructor1.assembleRoster()
-    instructor1.printRoster()
-
-    #admin1 = Admin("Michael", "Jordan", 232323)
-    #admin1.add_removeUser()
-    admin1.add_removeCourse()'''
-    #admin1 = Admin("Michael", "Jordan", 232323)
-    #while True:
-        #login()
-
-    #admin1.add_removeCourse()
-
     print('Welcome to CURSE!')
     while True:
         print('Please log in:')
@@ -709,25 +684,23 @@ def main():
                 elif option != '1' or option != '2' or option != '3' or option != '4' or option != '5' or option != '6':
                     option = input('Invalid numbering try again:')
 
-        elif (TYPE == 'ADMINISTRATOR'):
+        elif (TYPE == 'ADMIN'):
             admin = Admin(first_name, last_name, idNumber)
             while True:
-                option = input('Would you like to: 1)add or drop course, 2)add or remove course from the system, 3) Search all courses 4) Search Course by parameter 5) Log Out')
+                option = input('Would you like to: 1)add or remove course from the system, 2) Search all courses 3) Search Course by parameter 4) Log Out: ')
                 if (option == '1'):
                     admin.add_removeCourse()
-                elif (option == '2'):
-                    admin.add_removeCourse()
-                elif option == '3':
+                elif option == '2':
                     admin.searchallCourses()
-                elif option == '4':
+                elif option == '3':
                     admin.searchCourses()
-                elif option == '5':
+                elif option == '4':
                     print("Thank you using CURSE!")
                     break
-                elif option != '1' or option != '2' or option != '3' or option != '4' or option != '5':
+                elif option != '1' or option != '2' or option != '3' or option != '4':
                     option = input('Invalid numbering try again:')
 
-        elif TYPE != 'STUDENT' or TYPE != 'INSTRUCTOR' or TYPE != 'ADMINISTRATOR':
+        elif TYPE != 'STUDENT' or TYPE != 'INSTRUCTOR' or TYPE != 'ADMIN':
             print(TYPE, 'is invalid. Try again')
 
         choice = input("Would you like to log back in?(Y/N) ")
@@ -736,7 +709,7 @@ def main():
             pass
         elif choice == 'N':
             break
-            
+
 if __name__ == "__main__":
     main()
 
