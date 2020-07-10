@@ -499,13 +499,12 @@ class Admin(User):
                     elif ans == "2":
                         try:
                             courseId = input("Enter the CRN for the course that you would like to remove: \n")
-                            cursor.execute("""DELETE FROM COURSE WHERE CRN= """ + str(courseId))
+                            cursor.execute("""DELETE FROM COURSE WHERE CRN= ('%s')""" %(courseId))
                         except sqlite3.OperationalError:
                             print("Course does not exist\n")
                 break
             except IndexError:
                 print("Authorization failed")
-
 
     def add_removeUser(self):
         print("This is the remove user function")
