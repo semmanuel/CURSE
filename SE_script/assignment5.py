@@ -202,7 +202,7 @@ cursor.execute(
 cursor.execute(
   """INSERT INTO INSTRUCTOR_SCHEDULE VALUES('Black Holes Imagery:Getting Yall Out of The Dark',		'31739',	'BCOS',		'Katie Bouman',				'1:00 pm - 2:50 pm',		'MF',		'Summer 2020',	'4 Credits');""")
 database.commit()
-
+'''
 # QUERY FOR ALL
 print("Entire Student table")
 cursor.execute("""SELECT * FROM STUDENT""")
@@ -269,7 +269,7 @@ cursor.execute("""SELECT * FROM ADMIN""")
 query_result = cursor.fetchall()
 for i in query_result:
     print(i)
-
+'''
 class User:
     def __init__(self, fname: str, lname, idNum):
         self.firstName = fname
@@ -318,26 +318,27 @@ class Student(User):
         while True:
             print(
             'Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  ')
-            param = input('Which parameter you want to search by or enter q to quit:')
+            param = input('Which parameter you want to search by or enter q to quit:\n')
             param = param.upper()  # make sure the user input will always match comparison
             if param == "TITLE":
-                user_input = input('Enter Title of the course or q to quit:')
-                cursor.execute("""  SELECT * 
-                                   FROM COURSE
-                                   WHERE TITLE='%s';""" % (user_input))
-                query_result = cursor.fetchall() #technically should be fetch all in case there are many sections of a course
-                if query_result!=[]:
-                    print('Printing the query result')
-                    for i in query_result:
-                        print(i)
-                elif param=='q' or param=='Q':
-                    break
-                else:
-                    print('Title does not exist')
+                while True:
+                    user_input = input('Enter Title of the course or q to quit:\n')
+                    cursor.execute("""  SELECT * 
+                                       FROM COURSE
+                                       WHERE TITLE='%s';""" % (user_input))
+                    query_result = cursor.fetchall() #technically should be fetch all in case there are many sections of a course
+                    if query_result!=[]:
+                        print('Printing the query result')
+                        for i in query_result:
+                            print(i)
+                    elif user_input=='q' or user_input=='Q':
+                        break
+                    else:
+                        print('Title does not exist')
 
             elif param == "CRN":
                 while True:
-                    user_input = input('Enter CRN of the course or q to quit:')
+                    user_input = input('Enter CRN of the course or q to quit:\n')
                     if len(user_input) == 4 and user_input.isdigit():
                         cursor.execute("""  SELECT * 
                                          FROM COURSE
@@ -351,14 +352,14 @@ class Student(User):
                         else:
                             print('CRN does not exist')
 
-                    elif param=='q' or param=='Q':
+                    elif user_input=='q' or user_input=='Q':
                         break
                     else:
                         print('CRN can only have size digit of 4')
 
             elif param == "DEPT" or param=='DEPARTMENT':
                 while True:
-                    user_input = input('Enter Department of the course or q to quit:')
+                    user_input = input('Enter Department of the course or q to quit:\n')
                     user_input=user_input.upper()
                     if len(user_input) == 4:
                         cursor.execute("""  SELECT * 
@@ -378,7 +379,7 @@ class Student(User):
 
             elif param == "INSTRUCTOR":
                 while True:
-                    user_input = input('Enter Instructor of the course or q to quit:')
+                    user_input = input('Enter Instructor of the course or q to quit:\n')
                     user_input=user_input.upper() #NEED TO CRAFT AN ALGORITHM TO CAPITALIZE THE FIRST AND LAST NAME
                     cursor.execute("""  SELECT *            
                                      FROM COURSE
@@ -395,7 +396,7 @@ class Student(User):
 
             elif param == "TIME":
                 while True:
-                    user_input = input('Enter Time of the course or q to quit:')
+                    user_input = input('Enter Time of the course or q to quit:\n')
                     cursor.execute("""  SELECT * 
                                      FROM COURSE
                                      WHERE TIME='%s';"""% (user_input))
@@ -412,7 +413,7 @@ class Student(User):
 
             elif param == "DAYS_OF_WEEK":
                 while True:
-                    user_input = input('Enter Days of Week of the course or q to quit:')
+                    user_input = input('Enter Days of Week of the course or q to quit:\n')
                     cursor.execute("""  SELECT * 
                                      FROM COURSE
                                    WHERE DAYS_OF_WEEK='%s';""" % (user_input))
@@ -428,7 +429,7 @@ class Student(User):
 
             elif param == "SEMESTER":
                 while True:
-                    user_input = input('Enter Semester of the course or q to quit:')
+                    user_input = input('Enter Semester of the course or q to quit:\n')
                     user_input=user_input.upper()
                     cursor.execute("""  SELECT * 
                                      FROM COURSE
@@ -445,7 +446,7 @@ class Student(User):
 
             elif param == "CREDITS" or param=='CREDIT':
                 while True:
-                    user_input = input('Enter the number of credits of the course or q to quit:')
+                    user_input = input('Enter the number of credits of the course or q to quit:\n')
                     cursor.execute("""  SELECT * 
                                      FROM COURSE
                                  WHERE CREDITS='%s';""" % (user_input))
@@ -471,12 +472,12 @@ class Student(User):
         print('You can add or drop courses.')
         print('Use the crn, to add or drop course')
         while (True):
-            ch = input('Will you 0) add or 1) drop course or q) quit :')
+            ch = input('Will you 0) add or 1) drop course or q) quit :\n')
             if ch=='q'or ch=='Q':
                 break
             elif ch == '0':
                 while (True):
-                    user_input = input('Add the course CRN or press q to quit:')
+                    user_input = input('Add the course CRN or press q to quit:\n')
                     if (len(user_input) == 4 and user_input.isdigit() and (user_input!='q'or user_input!='Q')):  # crn cannot be greater that 4 digits nor can it include other characters but numbers
                         cursor.execute("""SELECT * 
                                      FROM COURSE
@@ -530,7 +531,7 @@ class Student(User):
 
             elif ch == '1':
                 while True:
-                    user_input = input('Remove the course CRN or press q to quit:')
+                    user_input = input('Remove the course CRN or press q to quit:\n')
                     if (len(user_input) == 4 and user_input.isdigit() and (user_input!='q'or user_input!='Q')):
                         cursor.execute("""  SELECT * 
                                         FROM COURSE
@@ -561,7 +562,7 @@ class Student(User):
 
 
     def printSched(self):
-        cursor.execute("""SELECT * FROM SCHEDULE;""")r
+        cursor.execute("""SELECT * FROM SCHEDULE;""")
         query_result = cursor.fetchall()
         if query_result != []:
             for i in query_result:
@@ -615,7 +616,6 @@ class Admin(User):
             except IndexError:
                 print("Authorization failed")
 
-
     def add_removeUser(self):
         print("This is the remove user function")
 
@@ -633,7 +633,6 @@ class Admin(User):
 
     def printRoster(self):
         print("This is the print roster function")
-
 
 class Instructor(User):
     def __init__(self, fname, lname, idNum):
@@ -662,7 +661,6 @@ class Instructor(User):
 
             print('There are no courses in the schedule\n')
     '''Printing all the courses schedule present in the database'''
-
 
     def assembleRoster(self):
         while True:
@@ -747,12 +745,15 @@ def login():
                 print("Incorrect Username or password\n")
         else:
             print("Invalid Argument\n")
-
-def main():
+def main ():
     print('Welcome to CURSE!')
     while True:
         print('Please log in:')
-        first_name, last_name, idNumber, TYPE = login()
+        #first_name, last_name, idNumber, TYPE = login()
+        TYPE = 'STUDENT'
+        first_name=''
+        last_name=""
+        idNumber=""
         if TYPE == 'STUDENT':
             student = Student(first_name, last_name, idNumber)
             while True:
@@ -819,7 +820,6 @@ def main():
             pass
         elif choice == 'N':
             break
-            
 if __name__ == "__main__":
     main()
 
@@ -839,15 +839,11 @@ def queryAll(tableName):
     query_result = cursor.fetchall()
     for i in query_result:
         print(i)
-
 def remove(tableName, primaryKey):
     cursor.execute("""DELETE FROM """ + tableName + """ WHERE ID= """ + primaryKey)
-
-
 def update(tableName, columnName, newValue, primaryKey):
     cursor.execute(
         """UPDATE """ + tableName + """ SET""" + columnName + """= """ + newValue + """WHERE ID= """ + primaryKey)
-
 def insert(type, tableName):
     if type == 1:
         fname = input("First name: ")
@@ -884,7 +880,8 @@ def insert(type, tableName):
         crn = input("Course CRN #: ")
         dept = input("Course Department: ")
         prof = input("Course Professor Name: ")
-        time = input("Course time(e.g 2:00-2:50PM): ")
+        time = inpu
+t("Course time(e.g 2:00-2:50PM): ")
         days = input("Course days of the week(Letters only): ")
         semester = input("Course Semester: ")
         year = input("Course Year: ")
@@ -892,5 +889,6 @@ def insert(type, tableName):
         cursor.execute(
             """INSERT INTO COURSE VALUES('%s', '%s', '%s', '%s','%s', '%s', '%s','%s', '%s');""" % (
             title, crn, dept, prof, time, days, semester, year, credit))
-
 '''
+
+
