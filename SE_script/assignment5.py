@@ -749,11 +749,7 @@ def main ():
     print('Welcome to CURSE!')
     while True:
         print('Please log in:')
-        #first_name, last_name, idNumber, TYPE = login()
-        TYPE = 'STUDENT'
-        first_name=''
-        last_name=""
-        idNumber=""
+        first_name, last_name, idNumber, TYPE = login()
         if TYPE == 'STUDENT':
             student = Student(first_name, last_name, idNumber)
             while True:
