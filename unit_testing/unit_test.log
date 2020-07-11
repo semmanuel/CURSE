@@ -1,0 +1,274 @@
+INFO:Would you like to: 1)add or drop course, 2) search course by parameter 3) print schedule 4) search all courses 5) Log Out: 
+
+INFO:45
+INFO:Would you like to: 1)add or drop course, 2) search course by parameter 3) print schedule 4) search all courses 5) Log Out: 
+
+INFO:1
+INFO:You can add or drop courses.
+INFO:Use the crn, to add or drop course
+INFO:Will you 0) add or 1) drop course or q) quit :
+
+INFO:9
+INFO:Will you 0) add or 1) drop course or q) quit :
+
+INFO:t
+INFO:Will you 0) add or 1) drop course or q) quit :
+
+INFO:0
+INFO:Add the course CRN or press q to quit:
+
+INFO:1
+INFO:The CRN should only be digits and be 4.
+INFO:Add the course CRN or press q to quit:
+
+INFO:12121
+INFO:The CRN should only be digits and be 4.
+INFO:Add the course CRN or press q to quit:
+
+INFO:1234
+INFO:There are no courses with the given CRN in the system
+INFO:Add the course CRN or press q to quit:
+
+INFO:1235
+INFO:Course added
+INFO:Add the course CRN or press q to quit:
+
+INFO:q
+INFO:Will you 0) add or 1) drop course or q) quit :
+
+INFO:
+INFO:Will you 0) add or 1) drop course or q) quit :
+
+INFO:t
+INFO:Will you 0) add or 1) drop course or q) quit :
+
+INFO:1
+INFO:Remove the course CRN or press q to quit:
+
+INFO:1234
+INFO:There are no courses with the given CRN in the system
+INFO:Remove the course CRN or press q to quit:
+
+INFO:1235
+INFO:You are not registered for the class with CRN:
+INFO:1235
+INFO:Will you 0) add or 1) drop course or q) quit :
+
+INFO:q
+INFO:Would you like to: 1)add or drop course, 2) search course by parameter 3) print schedule 4) search all courses 5) Log Out: 
+
+INFO:
+INFO:Would you like to: 1)add or drop course, 2) search course by parameter 3) print schedule 4) search all courses 5) Log Out: 
+
+INFO:2
+INFO:You are searching for courses.
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:OLA
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:TITLE
+INFO:Enter Title of the course or q to quit:
+
+INFO:ola
+INFO:Title does not exist
+INFO:Enter Title of the course or q to quit:
+
+INFO:ELEC3225
+INFO:Printing the query result
+INFO:('ELEC3225', 1235, 'BSEE', 'TBD', '8:00-9:50AM', 'MWF', '', 2020, 4)
+INFO:Enter Title of the course or q to quit:
+
+INFO:q
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:CRN
+INFO:Enter CRN of the course or q to quit:
+
+INFO:ola
+INFO:CRN can only have size digit of 4
+INFO:Enter CRN of the course or q to quit:
+
+INFO:0
+INFO:CRN can only have size digit of 4
+INFO:Enter CRN of the course or q to quit:
+
+INFO:1235
+INFO:Printing the query result
+INFO:('ELEC3225', 1235, 'BSEE', 'TBD', '8:00-9:50AM', 'MWF', '', 2020, 4)
+INFO:Enter CRN of the course or q to quit:
+
+INFO:q
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:DEPT
+INFO:Enter Department of the course or q to quit:
+
+INFO:OLA
+INFO:Department can only have 4 letters
+INFO:Enter Department of the course or q to quit:
+
+INFO:HASS
+INFO:Department not listed
+INFO:Enter Department of the course or q to quit:
+
+INFO:BSEE
+INFO:Printing the query result
+INFO:('ELEC3225', 1235, 'BSEE', 'TBD', '8:00-9:50AM', 'MWF', '', 2020, 4)
+INFO:Enter Department of the course or q to quit:
+
+INFO:Q
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:INSTRUCTOR
+INFO:Enter Instructor of the course or q to quit:
+
+INFO:A
+INFO:Instructor not listed
+INFO:Enter Instructor of the course or q to quit:
+
+INFO:TBD
+INFO:Printing the query result
+INFO:('ELEC3225', 1235, 'BSEE', 'TBD', '8:00-9:50AM', 'MWF', '', 2020, 4)
+INFO:('ENGR5500', 6543, 'HUSS', 'TBD', '11:00-12:50PM', 'MW', 'Fall', 2019, 4)
+INFO:('ELEC4300', 356, 'BSAS', 'TBD', '8:00-9:20AM', 'TTR', 'Fall', 2019, 3)
+INFO:('ELEC3250', 5678, 'BSCO', 'TBD', '1:00-3:50PM', 'WF', 'Spring', 2020, 3)
+INFO:('ELEC4500', 9825, 'BSME', 'TBD', '2:00-2:50PM', 'MT', 'Fall', 2019, 4)
+INFO:Enter Instructor of the course or q to quit:
+
+INFO:Q
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:TIME
+INFO:Enter Time of the course or q to quit:
+
+INFO:a
+INFO:Time not listed
+INFO:Enter Time of the course or q to quit:
+
+INFO:8am
+INFO:Printing the query result
+INFO:('DUMMY', 'VARIABLE', 'DUMMY', 'VARIABLE', '8am', 'DUMMY', 'VARIABLE', 'VARIABLE', '')
+INFO:Enter Time of the course or q to quit:
+
+INFO:q
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:DAYS_OF_WEEK
+INFO:Enter Days of Week of the course or q to quit:
+
+INFO:a
+INFO:Days_of_week not listed
+INFO:Enter Days of Week of the course or q to quit:
+
+INFO:MW
+INFO:Printing the query result
+INFO:('ENGR5500', 6543, 'HUSS', 'TBD', '11:00-12:50PM', 'MW', 'Fall', 2019, 4)
+INFO:Enter Days of Week of the course or q to quit:
+
+INFO:q
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:SEMESTER
+INFO:Enter Semester of the course or q to quit:
+
+INFO:A
+INFO:Semester does not exist
+INFO:Enter Semester of the course or q to quit:
+
+INFO:VARIABLE
+INFO:Printing the query result
+INFO:('DUMMY', 'VARIABLE', 'DUMMY', 'VARIABLE', '8am', 'DUMMY', 'VARIABLE', 'VARIABLE', '')
+INFO:Enter Semester of the course or q to quit:
+
+INFO:Q
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:CREDITS
+INFO:Enter the number of credits of the course or q to quit:
+
+INFO:2a
+INFO:Credits have to be numbers
+INFO:Enter the number of credits of the course or q to quit:
+
+INFO:4
+INFO:Printing the query result
+INFO:('ELEC3225', 1235, 'BSEE', 'TBD', '8:00-9:50AM', 'MWF', '', 2020, 4)
+INFO:('ENGR5500', 6543, 'HUSS', 'TBD', '11:00-12:50PM', 'MW', 'Fall', 2019, 4)
+INFO:('ELEC4500', 9825, 'BSME', 'TBD', '2:00-2:50PM', 'MT', 'Fall', 2019, 4)
+INFO:Enter the number of credits of the course or q to quit:
+
+INFO:q
+INFO:Here are the parameters one can search for course: title, crn, dept, instructor, time, days_of_week, semester, credits  
+INFO:Which parameter you want to search by or enter q to quit:
+
+INFO:Q
+INFO:Would you like to: 1)add or drop course, 2) search course by parameter 3) print schedule 4) search all courses 5) Log Out: 
+
+INFO:
+INFO:Would you like to: 1)add or drop course, 2) search course by parameter 3) print schedule 4) search all courses 5) Log Out: 
+
+INFO:
+INFO:Would you like to: 1)add or drop course, 2) search course by parameter 3) print schedule 4) search all courses 5) Log Out: 
+
+INFO:3
+INFO:('ELEC3225', '1235', 'BSEE', 'TBD', '8:00-9:50AM', 'MWF', '', '2020', '4')
+INFO:Would you like to: 1)add or drop course, 2) search course by parameter 3) print schedule 4) search all courses 5) Log Out: 
+
+INFO:
+INFO:Would you like to: 1)add or drop course, 2) search course by parameter 3) print schedule 4) search all courses 5) Log Out: 
+
+INFO:4
+INFO:This is the search all courses function
+INFO:All Available Course Titles and Corresponding CRNs
+INFO:('ELEC3225', 1235, 'BSEE', 'TBD', '8:00-9:50AM', 'MWF', '', 2020, 4)
+INFO:('ENGR5500', 6543, 'HUSS', 'TBD', '11:00-12:50PM', 'MW', 'Fall', 2019, 4)
+INFO:('ELEC4300', 356, 'BSAS', 'TBD', '8:00-9:20AM', 'TTR', 'Fall', 2019, 3)
+INFO:('ELEC3250', 5678, 'BSCO', 'TBD', '1:00-3:50PM', 'WF', 'Spring', 2020, 3)
+INFO:('ELEC4500', 9825, 'BSME', 'TBD', '2:00-2:50PM', 'MT', 'Fall', 2019, 4)
+INFO:('DUMMY', 'VARIABLE', 'DUMMY', 'VARIABLE', '8am', 'DUMMY', 'VARIABLE', 'VARIABLE', '')
+INFO:Would you like to: 1)add or drop course, 2) search course by parameter 3) print schedule 4) search all courses 5) Log Out: 
+
+INFO:5
+INFO:N
