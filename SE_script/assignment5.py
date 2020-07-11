@@ -156,12 +156,11 @@ cursor.execute(
     """INSERT INTO INSTRUCTOR VALUES(00020005, 'Katie', 'Bouman', 'Assistant Prof.', 2019, 'BSEE', 'boumank');""")
 cursor.execute(
     """INSERT INTO INSTRUCTOR VALUES(00020006, 'Daniel', 'Bernoulli', 'Associate Prof.', 1760, 'BSME', 'bernoullid');""")
-database.commit()
+
 # Admin list
 cursor.execute("""INSERT INTO ADMIN VALUES(00030001, 'Barack', 'Obama', 'President', 'Dobbs 1600', 'obamab');""")
 cursor.execute(
     """INSERT INTO ADMIN VALUES(00030002, 'Malala', 'Yousafzai', 'Registrar', 'Wentworth 101', 'yousafzaim');""")
-#database.commit()
 
 # Course List
 cursor.execute(
@@ -190,6 +189,7 @@ cursor.execute(
   """INSERT INTO COURSE VALUES('Black Holes Imagery:Getting Yall Out of The Dark',		  '31739',	'BCOS',		'Katie Bouman',				'1:00 pm - 2:50 pm',		'MF',		'Summer', '2020',	'4 Credits');""")
 #database.commit()
 '''
+
 # Instructor Schedule
 cursor.execute(
   """INSERT INTO INSTRUCTOR_SCHEDULE VALUES('Rewrite Everything With Sin Functions ', 							'31798', 	'BSEE', 	'Joseph Fourier',     '12:00 pm - 12:50pm',		'MTR',	'Summer 2020',	'4 Credits');""")
@@ -561,13 +561,14 @@ class Student(User):
 
 
     def printSched(self):
-        cursor.execute("""SELECT * FROM SCHEDULE;""")
+        cursor.execute("""SELECT * FROM SCHEDULE;""")r
         query_result = cursor.fetchall()
         if query_result != []:
             for i in query_result:
                 print(i)
         else:
-            print('There are no courses in the schedule')
+            print('There are no courses in the schedule\n')
+
 
     '''Printing all the courses schedule present in the database'''
 
@@ -577,35 +578,39 @@ class Admin(User):
 
     def add_removeCourse(self):
         while True:
-            print("confirm credentials for admin use")
-            username = input("Enter your username: ")
-            password = getpass.getpass(prompt="Enter your password: ", stream=None)
+
+            print("confirm credentials for admin use\n")
+            username = input("Enter your username: \n")
+            password = getpass.getpass(prompt="Enter your password: \n", stream=None)
             # Query for login
             cursor.execute(
                 """SELECT ID FROM USER WHERE USERNAME = ('%s') AND PASSWORD = ('%s') AND TYPE = 'ADMIN';""" % (username, password))
             query_result = cursor.fetchall()
             try:
                 if query_result[0] != 0:
-                    ans = input("Would you like to add or remove a course(1 to add, 2 to remove)? ")
+
+                    print("Authorization Successful")
+                    ans = input("Would you like to add or remove a course(1 to add, 2 to remove)? \n")
                     if ans == "1":
-                        title = input("Course Title: ")
-                        crn = input("Course CRN #: ")
-                        dept = input("Course Department: ")
-                        prof = input("Course Professor Name: ")
-                        time = input("Course time(e.g 2:00-2:50PM): ")
-                        days = input("Course days of the week(Letters only): ")
-                        semester = input("Course Semester: ")
-                        year = input("Course Year: ")
-                        credit = input("Credits of Course:")
+                        title = input("Course Title: \n")
+                        crn = input("Course CRN #: \n")
+                        dept = input("Course Department: \n")
+                        prof = input("Course Professor Name: \n")
+                        time = input("Course time(e.g 2:00-2:50PM): \n")
+                        days = input("Course days of the week(Letters only): \n")
+                        semester = input("Course Semester: \n")
+                        year = input("Course Year: \n")
+                        credit = input("Credits of Course:\n")
                         cursor.execute(
                             """INSERT INTO COURSE VALUES('%s', '%s', '%s', '%s','%s', '%s', '%s','%s', '%s');""" % (
                                 title, crn, dept, prof, time, days, semester, year, credit))
                     elif ans == "2":
                         try:
-                            courseId = input("Enter the CRN for the course that you would like to remove: ")
-                            cursor.execute("""DELETE FROM COURSE WHERE CRN= """ + str(courseId))
+
+                            courseId = input("Enter the CRN for the course that you would like to remove: \n")
+                            cursor.execute("""DELETE FROM COURSE WHERE CRN= ('%s')""" %(courseId))
                         except sqlite3.OperationalError:
-                            print("Course does not exist")
+                            print("Course does not exist\n")
                 break
             except IndexError:
                 print("Authorization failed")
@@ -646,8 +651,7 @@ class Instructor(User):
                 for i in query_result:
                     print(i)
         except IndexError:
-            print("No Roster found")
-
+            print("No Roster found\n")
     def printSchedule(self):
         cursor.execute("""SELECT * SCHEDULE""")
         query_result = cursor.fetchall()
@@ -655,24 +659,24 @@ class Instructor(User):
             for i in query_result:
                 print(i)
         else:
-            print('There are no courses in the schedule')
 
+            print('There are no courses in the schedule\n')
     '''Printing all the courses schedule present in the database'''
 
-    def searchCourses(self):
-        print("This is the print course function")
+
     def assembleRoster(self):
         while True:
-            crn = input("Enter the crn to Create Course Roster: ")
+            crn = input("Enter the crn to Create Course Roster: \n")
             # Check to see if course exist
             cursor.execute(
                 """SELECT TITLE FROM COURSE WHERE CRN = ('%s');""" % (crn))
             query_result = cursor.fetchall()
             try:
                 if query_result[0] != 0:
-                    print("Course Found")
+                    print("Course Found\n")
                     while True:
-                        studid= input("Enter iD of Student you would like to add to roster?(Q to quit)")
+                        studid= input("Enter iD of Student you would like to add to roster?(Q to quit)\n")
+                        studid= studid.upper()
                         if studid == "Q":
                             break
                         else:
@@ -682,52 +686,53 @@ class Instructor(User):
                             try:
                                 if query_result[0] != 0:
                                     cursor.execute("""INSERT INTO ROSTER VALUES('%s', '%s');""" % (crn, studid))
-                                    print("Student found and added to Roster")
+                                    print("Student found and added to Roster\n")
                             except IndexError:
-                                print("Student does not exist/ID is invalid")
+                                print("Student does not exist/ID is invalid\n")
                     break
             except IndexError:
-                print("Course does not exist/ID is invalid")
+                print("Course does not exist/ID is invalid\n")
 
 def login():
     while True:
-        acct = input("Is this your first time logging in(Y/N)? ")
+        acct = input("Is this your first time logging in(Y/N)? \n")
         acct = acct.upper()
         if acct == "Y":
             while True:
-                type = input("Are you student, instructor or admin?")
+                type = input("Are you student, instructor or admin? \n")
                 type = type.upper()
                 if type == 'STUDENT' or type == 'INSTRUCTOR' or type == 'ADMIN':
                     break
                 elif type != 'STUDENT' or type != 'INSTRUCTOR' or type != 'ADMIN':
-                    print("Invalid argument")
-            fname = input("Enter your first name? ")
-            lname = input("Enter your last name? ")
-            email = input("Enter your email address? ")
-            id = input("Enter your ID Number? ")
-            username = input("Create a username: ")
+
+                    print("Invalid argument\n")
+            fname = input("Enter your first name? \n")
+            lname = input("Enter your last name? \n")
+            email = input("Enter your email address? \n")
+            id = input("Enter your ID Number? \n")
+            username = input("Create a username: \n")
             while True:
-                password = getpass.getpass(prompt="Create your password: ", stream=None)
-                pw = getpass.getpass(prompt="Re-enter your password: ", stream=None)
+                password = getpass.getpass(prompt="Create your password: \n", stream=None)
+                pw = getpass.getpass(prompt="Re-enter your password: \n", stream=None)
                 if password == pw:
                     cursor.execute(
                         """INSERT INTO USER VALUES('%s', '%s', '%s', '%s','%s', '%s','%s');""" % (id, fname, lname, email, username, password, type))
-                    print("Account successfully created")
+                    print("Account successfully created\n")
                     authorization = True
                     return fname, lname, id, type
                 elif password != pw:
-                    print("Passwords do not match")
+                    print("Passwords do not match \n")
 
         elif acct == "N":
-            username = input("Enter your username: ")
-            password = getpass.getpass(prompt="Enter your password: ", stream=None)
+            username = input("Enter your username: \n")
+            password = getpass.getpass(prompt="Enter your password: \n", stream=None)
             # Query for login
             cursor.execute(
                 """SELECT ID, NAME, SURNAME, TYPE FROM USER WHERE USERNAME = ('%s') AND PASSWORD = ('%s');""" % (username, password))
             query_result = cursor.fetchall()
             try:
                 if query_result[0] != 0:
-                    print("Login Successful")
+                    print("Login Successful \n")
                     for i in query_result:
                         print(i)
 
@@ -737,94 +742,84 @@ def login():
                 TYPE = query_result[0][3]
                 print(first_name)
                 print(last_name)
-                return idNumber, first_name, last_name, TYPE
+                return first_name, last_name, idNumber,TYPE
             except IndexError:
-                print("Incorrect Username or password")
+                print("Incorrect Username or password\n")
         else:
-            print("Invalid Argument")
+            print("Invalid Argument\n")
 
 def main():
+    print('Welcome to CURSE!')
+    while True:
+        print('Please log in:')
+        first_name, last_name, idNumber, TYPE = login()
+        if TYPE == 'STUDENT':
+            student = Student(first_name, last_name, idNumber)
+            while True:
+                option = input(
+                    'Would you like to: 1)add or drop course, 2) search course by parameter 3) print schedule 4) search all courses 5) Log Out: \n')
 
-    '''
-    # User Interface
-    print("Hello, Welcome to the CURSE Program")
-    firstname = input("What is your first name?")
-    lastname = input("What is your last name?")
-    ident = input("What is your ID Number?")
-    student1 = Student(firstname, lastname, ident)
-    print(student1.lastName)
-    student1.searchallCourses()
-    student1.printAll()
-    instructor1 = Instructor("Aaron", "Carpenter", 456789)
-    instructor1.assembleRoster()
-    instructor1.printRoster()
-    #admin1 = Admin("Michael", "Jordan", 232323)
-    #admin1.add_removeUser()
-    admin1.add_removeCourse()'''
-    #admin1 = Admin("Michael", "Jordan", 232323)
-    #while True:
-        #login()
+                if option == '1':
+                    student.add_dropCourse()
+                elif option == '2':
+                    student.searchCourses()
+                elif option == '3':
+                    student.printSched()
+                elif option == '4':
+                    student.searchallCourses()
+                elif option == '5':
+                    print("Thank you using CURSE!")
+                    break
+                elif option != '1' or option != '2' or option != '3' or option != '4' or option != '5':
+                    print('Invalid numbering try again:\n')
 
-    #admin1.add_removeCourse()
+        elif (TYPE == 'INSTRUCTOR'):
+            instructor = Instructor(first_name, last_name, idNumber)
+            while True:
+                option = input('Would you like to 1) print schedule, 2) print roster, 3) assemble roster 4) Search all courses 5) Search Course by parameter 6) Log out: \n')
 
-    print('Welcome to CURSE! What would you like to do?')
-    print('Please log in:')
-    first_name, last_name, idNumber, TYPE = login()
+                if option == '1':
+                    instructor.printSchedule()
+                elif option == '2':
+                    instructor.printRoster()
+                elif option == '3':
+                    instructor.assembleRoster()
+                elif option == '4':
+                    instructor.searchallCourses()
+                elif option == '5':
+                    instructor.searchCourses()
+                elif option == '6':
+                    print("Thank you using CURSE!\n")
+                    break
+                elif option != '1' or option != '2' or option != '3' or option != '4' or option != '5' or option != '6':
+                    print('Invalid numbering try again:\n')
 
-    if TYPE == 'STUDENT':
-        student = Student(first_name, last_name, idNumber)
-        while True:
-            option = input(
-                'Would you like to: 1)add or drop course, 2) search course 3) print schedule 4) search all courses 5) Log Out: ')
+        elif (TYPE == 'ADMIN'):
+            admin = Admin(first_name, last_name, idNumber)
+            while True:
+                option = input('Would you like to: 1)add or remove course from the system, 2) Search all courses 3) Search Course by parameter 4) Log Out: \n')
+                if (option == '1'):
+                    admin.add_removeCourse()
+                elif option == '2':
+                    admin.searchallCourses()
+                elif option == '3':
+                    admin.searchCourses()
+                elif option == '4':
+                    print("Thank you using CURSE!\n")
+                    break
+                elif option != '1' or option != '2' or option != '3' or option != '4':
+                    print('Invalid numbering try again:\n')
 
-            if option == '1':
-                student.add_dropCourse()
-            elif option == '2':
-                student.searchCourses()
-            elif option == '3':
-                student.printSched()
-            elif option == '4':
-                student.searchallCourses()
-            elif option == '5':
-                print("Thank you using CURSE!")
-                break
-            elif option != '1' or option != '2' or option != '3' or option != '4' or option != '5':
-                option = input('Invalid numbering try again:')
+        elif TYPE != 'STUDENT' or TYPE != 'INSTRUCTOR' or TYPE != 'ADMIN':
+            print(TYPE, 'is invalid. Try again')
 
-    elif (TYPE == 'INSTRUCTOR'):
-        instructor = Instructor(first_name, last_name, idNumber)
-        while True:
-            option = input('Would you like to 1) print schedule, 2) print roster, 3) assemble roster 4) Log out: ')
-
-            if option == '1':
-                instructor.printSchedule()
-            elif option == '2':
-                instructor.printRoster()
-            elif option == '3':
-                instructor.assembleRoster()
-            elif option == '4':
-                print("Thank you using CURSE!")
-                break
-            elif option != '1' or option != '2' or option != '3' or option != '4':
-                option = input('Invalid numbering try again:')
-
-    elif (TYPE == 'ADMINISTRATOR'):
-        admin = Admin(first_name, last_name, idNumber)
-        while True:
-            option = input('Would you like to: 1)add or drop course, 2)add or remove course from the system, 3) Log Out')
-            if (option == '1'):
-                admin.add_removeCourse()
-            elif (option == '2'):
-                admin.add_removeCourse()
-            elif option == '3':
-                print("Thank you using CURSE!")
-                break
-            elif option != '1' or option != '2' or option != '3':
-                option = input('Invalid numbering try again:')
-
-    elif TYPE != 'STUDENT' or TYPE != 'INSTRUCTOR' or TYPE != 'ADMINISTRATOR':
-        print(TYPE, 'is invalid. Try again')
-
+        choice = input("Would you like to log back in?(Y/N) \n")
+        choice = choice.upper()
+        if choice == 'Y':
+            pass
+        elif choice == 'N':
+            break
+            
 if __name__ == "__main__":
     main()
 
@@ -844,11 +839,15 @@ def queryAll(tableName):
     query_result = cursor.fetchall()
     for i in query_result:
         print(i)
+
 def remove(tableName, primaryKey):
     cursor.execute("""DELETE FROM """ + tableName + """ WHERE ID= """ + primaryKey)
+
+
 def update(tableName, columnName, newValue, primaryKey):
     cursor.execute(
         """UPDATE """ + tableName + """ SET""" + columnName + """= """ + newValue + """WHERE ID= """ + primaryKey)
+
 def insert(type, tableName):
     if type == 1:
         fname = input("First name: ")
@@ -893,4 +892,5 @@ def insert(type, tableName):
         cursor.execute(
             """INSERT INTO COURSE VALUES('%s', '%s', '%s', '%s','%s', '%s', '%s','%s', '%s');""" % (
             title, crn, dept, prof, time, days, semester, year, credit))
+
 '''
