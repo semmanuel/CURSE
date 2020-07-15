@@ -308,11 +308,6 @@ class User:
         for i in query_result:
             print(i)
 
-
-class Student(User):
-    def __init__(self, fname, lname, idNum):
-        super().__init__(fname, lname, idNum)
-
     def searchCourses(self):
         print('You are searching for courses.')
         while True:
@@ -464,8 +459,9 @@ class Student(User):
             elif param == "q" or param=='Q':
                 break
 
-            #database.commit()
-            #break
+class Student(User):
+    def __init__(self, fname, lname, idNum):
+        super().__init__(fname, lname, idNum)
 
     def add_dropCourse(self):
         # Add or drop courses as a student, depending on crn_parameter
