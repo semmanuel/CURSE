@@ -490,6 +490,13 @@ class Student(User):
                                      WHERE COURSE.TIME = SCHEDULE.TIME AND COURSE.DAYS_OF_WEEK = SCHEDULE.DAYS_OF_WEEK;""")
                             query_result2 = cursor.fetchone()       # check for courses and schedule with the same the days of the week and time
                             if query_result2 == None:
+                                #Add student to roster automatically
+                                try:
+                                    studentID = input('Enter student id number to register for Course:\n')
+                                    cursor.execute("""INSERT INTO ROSTER VALUES('%s', '%s');""" % (user_input, studentID))
+                                except sqlite3.IntegrityError:
+                                    print('You are already registered for course')
+
                                 #use the query retrieved from courses table and store them in variables to be added to the sql_command
                                 result=[(query_result[0],
                                 query_result[1],
@@ -502,7 +509,7 @@ class Student(User):
                                 query_result[8])]
                                 sql_command = """INSERT INTO SCHEDULE(TITLE,CRN,DEPT,INSTRUCTOR, TIME,DAYS_OF_WEEK, SEMESTER, YEAR, CREDITS) VALUES(?,?,?,?,?,?,?,?,?)"""
                                 cursor.executemany(sql_command, result)
-                                print('Course added')
+                                print('Course added to schedule')
                                 database.commit()
                             else:
                                 print('You have a time conflict with:')
