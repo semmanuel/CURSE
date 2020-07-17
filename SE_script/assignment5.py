@@ -565,13 +565,20 @@ class Student(User):
 
 
     def printSched(self):
-        cursor.execute("""SELECT * FROM SCHEDULE;""")
+        Stu_iD= input("Enter your student id:\n")
+        cursor.execute(
+            """SELECT ROSTER.CRN, COURSE.TITLE, COURSE.TIME, COURSE.INSTRUCTOR FROM ROSTER,COURSE WHERE ROSTER.CRN= COURSE.CRN AND ROSTER.ID= (%s) ORDER BY COURSE.TITLE;""" %(Stu_iD))
         query_result = cursor.fetchall()
         if query_result != []:
+            print("Schedule: \n")
             for i in query_result:
                 print(i)
         else:
             print('There are no courses in the schedule\n')
+        '''
+        Select CRN FROM ROSTER WHERE ID= StudentID
+        also add times and titles
+        '''
 
 
     '''Printing all the courses schedule present in the database'''
@@ -661,7 +668,6 @@ class Instructor(User):
             for i in query_result:
                 print(i)
         else:
-
             print('There are no courses in the schedule\n')
     '''Printing all the courses schedule present in the database'''
 
