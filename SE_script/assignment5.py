@@ -488,22 +488,28 @@ class Student(User):
                                    WHERE CRN='%s';""" % (user_input))
                         query_result1 = cursor.fetchone()
                         if query_result != query_result1:           #after searching in both tables, if they are different then schedule does not have the course
-                         #check if there are other courses with the same time
-                            cursor.execute("""  SELECT *            
-                                     FROM COURSE, SCHEDULE
-                                     WHERE COURSE.TIME = SCHEDULE.TIME AND COURSE.DAYS_OF_WEEK = SCHEDULE.DAYS_OF_WEEK;""")
-                            query_result2 = cursor.fetchone()       # check for courses and schedule with the same the days of the week and time
-                            if query_result2 == None:
-                                #use the query retrieved from courses table and store them in variables to be added to the sql_command
-                                result=[(query_result[0],
-                                query_result[1],
-                                query_result[2],
-                                query_result[3],
-                                query_result[4],
-                                query_result[5],
-                                query_result[6],
-                                query_result[7],
-                                query_result[8])]
+
+                            #check if there are other courses with the same time
+                            course_time,course_days=query_result[4],query_result[5]
+
+                            #unlike the query_result, the query_result1 might have an empty tuple from querying
+                            #So it is needed to handle it
+                            if query_result1!= None:
+                                schedule_time,schedule_days=query_result1[4],query_result1[5]
+                            else:
+                                schedule_time,schedule_days='',''
+
+                            if (course_time != schedule_time) and (course_days!=schedule_days):
+                                result=[
+                                (query_result[0],  #TITLE
+                                query_result[1],    #CRN
+                                query_result[2],    #DEPT
+                                query_result[3],    #INSTRUCTOR
+                                query_result[4],    #TIME
+                                query_result[5],    #DAYS_OF_WEEK
+                                query_result[6],    #SEMESTER
+                                query_result[7],    #YEAR
+                                query_result[8] )]  #CREDITS
                                 sql_command = """INSERT INTO SCHEDULE(TITLE,CRN,DEPT,INSTRUCTOR, TIME,DAYS_OF_WEEK, SEMESTER, YEAR, CREDITS) VALUES(?,?,?,?,?,?,?,?,?)"""
                                 cursor.executemany(sql_command, result)
                                 print('Course added')
