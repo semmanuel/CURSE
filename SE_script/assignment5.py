@@ -472,6 +472,7 @@ class Student(User):
             if ch=='q'or ch=='Q':
                 break
             elif ch == '0':
+                studentID = input('Enter student id number to register for Course:\n')
                 while (True):
                     user_input = input('Add the course CRN or press q to quit:\n')
                     if (len(user_input) == 4 and user_input.isdigit() and (user_input!='q'or user_input!='Q')):  # crn cannot be greater that 4 digits nor can it include other characters but numbers
@@ -499,7 +500,6 @@ class Student(User):
                             if (course_time != schedule_time) and (course_days!=schedule_days):
                                 # Add student to roster automatically
                                 try:
-                                    studentID = input('Enter student id number to register for Course:\n')
                                     cursor.execute(
                                         """INSERT INTO ROSTER VALUES('%s', '%s');""" % (user_input, studentID))
                                 except sqlite3.IntegrityError:
