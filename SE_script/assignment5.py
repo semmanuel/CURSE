@@ -497,6 +497,14 @@ class Student(User):
                                 schedule_time,schedule_days='',''
 
                             if (course_time != schedule_time) and (course_days!=schedule_days):
+                                # Add student to roster automatically
+                                try:
+                                    studentID = input('Enter student id number to register for Course:\n')
+                                    cursor.execute(
+                                        """INSERT INTO ROSTER VALUES('%s', '%s');""" % (user_input, studentID))
+                                except sqlite3.IntegrityError:
+                                    print('You are already registered for course')
+
                                 result=[
                                 (query_result[0],  #TITLE
                                 query_result[1],    #CRN
