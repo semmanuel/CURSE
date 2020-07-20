@@ -179,15 +179,15 @@ cursor.execute(
 
 # Debating on having theses lines or not
 '''cursor.execute(
-  """INSERT INTO COURSE VALUES('Rewrite Everything With Sin Functions ', 							'31798', 	'BSEE', 	'Joseph Fourier',     '12:00 pm - 12:50pm',		'MTR',	'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('Rewrite Everything With Sin Functions ',            '31798', 	'BSEE', 	'JOSEPH FOURIER', '12:00 pm - 12:50pm',		'MTR',	'Summer', '2020',	'4 Credits');""")
 cursor.execute(
-  """INSERT INTO COURSE VALUES('A Winner Is a Dreamer Who Never Gives Up',   					'31039', 	'HUSS', 	'Nelson Mandela', 		'10:00 am - 12:50 pm', 	'TR',		'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('A Winner Is a Dreamer Who Never Gives Up',          '31039', 	'HUSS', 	'NELSON MANDELA', '10:00 am - 12:50 pm', 	'TR',		'Summer', '2020',	'4 Credits');""")
 cursor.execute(
-  """INSERT INTO COURSE VALUES('Become the Father of Observational Astronomy', 				'31748', 	'BSAS', 	'Galileo Galilei',     '9:30  am - 10:50 am',  'WF',		'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('Become the Father of Observational Astronomy',      '31748', 	'BSAS', 	'GALILEO GALILEI', '9:30  am - 10:50 am',  'WF',		'Summer', '2020',	'4 Credits');""")
 cursor.execute(
-  """INSERT INTO COURSE VALUES('Cryptanalysis: Send Me a Message I Cant Decrypt',			'31431', 	'BSCO',		'Alan Turing',				'11:00 am - 12:20 pm',	'WF',		'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('Cryptanalysis: Send Me a Message I Cant Decrypt',   '31431', 	'BSCO',		'ALAN TURING',	'11:00 am - 12:20 pm',	'WF',		'Summer', '2020',	'4 Credits');""")
 cursor.execute(
-  """INSERT INTO COURSE VALUES('Black Holes Imagery:Getting Yall Out of The Dark',		  '31739',	'BCOS',		'Katie Bouman',				'1:00 pm - 2:50 pm',		'MF',		'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('Black Holes Imagery:Getting Yall Out of The Dark', '31739',	    'BCOS',		'KATIE BOUMAN',	'1:00 pm - 2:50 pm',		'MF',		'Summer', '2020',	'4 Credits');""")
 #database.commit()
 '''
 
@@ -741,9 +741,48 @@ class Admin(User):
             except IndexError:
                 print("Authorization failed")
 
+    def link_unlinkInstructor(self):
+        while True:
+            print("confirm credentials for admin use\n")
+            username = input("Enter your username: \n")
+            password = getpass.getpass(prompt="Enter your password: \n", stream=None)
+            # Query for login
+            cursor.execute(
+                """SELECT ID FROM USER WHERE USERNAME = ('%s') AND PASSWORD = ('%s') AND TYPE = 'ADMIN';""" % (
+                    username, password))
+            query_result = cursor.fetchall()
+            try:
+                if query_result[0] != 0:
+                    print("Authorization Successful")
+                    ans = input(
+                        "Would you like to link or unlink a instructor to a course(1 to link, 2 to unlink)? \n")
+                    while True:
+                        crn = input("Enter the crn to add to Course Roster: (Q to quit) \n")
+                        if crn == "Q" or crn == "q":
+                            break
+                        else:
+                            # Check to see if course exist
+                            cursor.execute(
+                                """SELECT TITLE FROM COURSE WHERE CRN = ('%s');""" % (crn))
+                            query_result = cursor.fetchall()
+                            try:
+                                if query_result[0] != 0:
+                                    print("Course Found\n")
+                                    instructorname = input("Enter First & Last Name of Instructor (Q to quit)\n")
+                                    instructorname = instructorname.upper()
 
-    def printCourse(self):
-        print("This is the print course function")
+                                    if query_result[0] != 0:
+                                        if ans == "1":
+                                            cursor.execute("""UPDATE COURSE SET INSTRUCTOR= ('%s') WHERE CRN= ('%s')""" % (instructorname,crn))
+                                            print("Instructor " + instructorname + " added to course\n")
+                                        elif ans == "2":
+                                            cursor.execute("""UPDATE COURSE SET INSTRUCTOR= ('TBD') WHERE CRN= ('%s')""" % (crn))
+
+                            except IndexError:
+                                print("Course does not exist/ID is invalid\n")
+                break
+            except IndexError:
+                print("Authorization failed")
 
     def printRoster(self):
         print("This is the print roster function")
@@ -920,9 +959,11 @@ def main ():
                 elif option == '5':
                     admin.link_unlinkStudent()
                 elif option == '6':
+                    admin.link_unlinkInstructor()
+                elif option == '7':
                     print("Thank you using CURSE!\n")
                     break
-                elif option != '1' or option != '2' or option != '3' or option != '4' or option != '5' or option != '6':
+                elif option != '1' or option != '2' or option != '3' or option != '4' or option != '5' or option != '6' or option != '7':
                     print('Invalid numbering try again:\n')
 
         elif TYPE != 'STUDENT' or TYPE != 'INSTRUCTOR' or TYPE != 'ADMIN':
