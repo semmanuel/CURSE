@@ -82,9 +82,11 @@ cursor.execute(sql_command)
 sql_command = """CREATE TABLE ROSTER (
 CRN 		INT 	NOT NULL,
 ID      	INT		NOT NULL,
+INSTRUCTID      	INT		NOT NULL,
 FOREIGN KEY (CRN) REFERENCES COURSE(CRN),
 FOREIGN KEY (ID) REFERENCES STUDENT(ID),
-UNIQUE (CRN, ID))
+FOREIGN KEY (INSTRUCTID) REFERENCES INSTRUCTOR(ID),
+UNIQUE (CRN, ID, INSTRUCTID))
 ;"""
 # execute the statement
 cursor.execute(sql_command)
