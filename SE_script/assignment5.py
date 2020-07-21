@@ -188,7 +188,7 @@ cursor.execute(
 cursor.execute(
   """INSERT INTO COURSE VALUES('Cryptanalysis: Send Me a Message I Cant Decrypt',			'31431', 	'BSCO',		'Alan Turing',				'11:00 am - 12:20 pm',	'WF',		'Summer', '2020',	'4 Credits');""")
 cursor.execute(
-  """INSERT INTO COURSE VALUES('Black Holes Imagery:Getting Yall Out of The Dark',		  '31739',	'BCOS',		'Katie Bouman',				'1:00 pm - 2:50 pm',		'MF',		'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('Black Holes Imagery:Getting Yall Out of The Dark',		 '31739',	'BCOS',		'Katie Bouman',				'1:00 pm - 2:50 pm',		'MF',		'Summer', '2020',	'4 Credits');""")
 #database.commit()
 '''
 
@@ -204,74 +204,35 @@ cursor.execute(
 cursor.execute(
   """INSERT INTO INSTRUCTOR_SCHEDULE VALUES('Black Holes Imagery:Getting Yall Out of The Dark',		'31739',	'BCOS',		'Katie Bouman',				'1:00 pm - 2:50 pm',		'MF',		'Summer 2020',	'4 Credits');""")
 database.commit()
-'''
-# QUERY FOR ALL
-print("Entire Student table")
-cursor.execute("""SELECT * FROM STUDENT""")
-query_result = cursor.fetchall()
-for i in query_result:
-    print(i)
 
-# QUERY FOR ALL
-print("Entire Instructor table")
-cursor.execute("""SELECT * FROM INSTRUCTOR""")
-query_result = cursor.fetchall()
-for i in query_result:
-    print(i)
 
-# QUERY FOR ALL
-print("Entire Admin table")
-cursor.execute("""SELECT * FROM ADMIN""")
-query_result = cursor.fetchall()
-for i in query_result:
-    print(i)
 
-# QUERY FOR ALL
-print("Entire Course table")
-cursor.execute("""SELECT * FROM COURSE""")
-query_result = cursor.fetchall()
-for i in query_result:
-    print(i)
+#Roster Table
 
-# Potential Instructors matched with the course
-cursor.execute(
-    """SELECT COURSE.TITLE,COURSE.DEPT, NAME, SURNAME FROM COURSE, INSTRUCTOR WHERE COURSE.DEPT = INSTRUCTOR.DEPT;""")
-# Check for professor
-query_result = cursor.fetchall()
-try:
-    if query_result[0] != 0:
-        print("Potential Instructors for each Course: ")
-        for i in query_result:
-            print(i)
-except IndexError:
-    print("No Instructors found for courses")
 
-# Query for Course Titles and CRN
-print("All Available Course Titles and Corresponding CRNs")
-cursor.execute("""SELECT TITLE, CRN FROM COURSE""")
-query_result = cursor.fetchall()
-for i in query_result:
-    print(i)
+#"cursor.execute(
+#    """INSERT INTO ROSTER VALUES('0235 ', 		'00010001', 	, 	'Joseph Fourier',     '12:00 pm - 12:50pm',		'MTR',	'Summer 2020',	'4 Credits');""")
+#cursor.execute(
+#  """INSERT INTO ROSTER VALUES('1235',   		'67821234', 	'HUSS', 	'Nelson Mandela', 		'10:00 am - 12:50 pm', 	'TR',		'Summer 2020',	'4 Credits');""")
+#cursor.execute(
+#  """INSERT INTO ROSTER VALUES('6543', 			'00012222', 	'BSAS', 	'Galileo Galilei',     '9:30  am - 10:50 am',  'WF',		'Summer 2020',	'4 Credits');""")
+#cursor.execute(
+#  """INSERT INTO ROSTER VALUES('0944',			 '7753318', 	'BSCO',		'Alan Turing',				'11:00 am - 12:20 pm',	'WF',		'Summer 2020',	'4 Credits');""")
+#cursor.execute(
+#  """INSERT INTO ROSTER VALUES('9753',		   '9999999',	  'BCOS',		'Katie Bouman',				'1:00 pm - 2:50 pm',		'MF',		'Summer 2020',	'4 Credits');""")
+#database.commit()
+#VALUES(?,?,?,?,?,?,?,?,?)
+"""CRN 		INT 	NOT NULL,
+ID      	INT		NOT NULL,
+INSTRUCTID      	INT		NOT NULL,
+FOREIGN KEY (CRN) REFERENCES COURSE(CRN),
+FOREIGN KEY (ID) REFERENCES STUDENT(ID),
+FOREIGN KEY (INSTRUCTID) REFERENCES INSTRUCTOR(ID),
+UNIQUE (CRN, ID, INSTRUCTID))
+;"""
 
-# Remove instructor
-cursor.execute("""DELETE FROM INSTRUCTOR WHERE ID= 00020004""")
 
-# QUERY FOR Instructor
-print("Entire Instructor table")
-cursor.execute("""SELECT * FROM INSTRUCTOR""")
-query_result = cursor.fetchall()
-for i in query_result:
-    print(i)
 
-# Update ADMIN
-cursor.execute("""UPDATE ADMIN SET TITLE= 'Past President' WHERE ID= 00030001""")
-# QUERY FOR ALL
-print("Entire Admin table")
-cursor.execute("""SELECT * FROM ADMIN""")
-query_result = cursor.fetchall()
-for i in query_result:
-    print(i)
-'''
 class User:
     def __init__(self, fname: str, lname, idNum):
         self.firstName = fname
@@ -892,66 +853,4 @@ database.commit()
 
 # close the connection
 database.close()
-
-'''
-######################################################################
-# Functions for future use
-def queryAll(tableName):
-    print("Entire " + tableName + " table")
-    cursor.execute("""SELECT * FROM """ + tableName)
-    query_result = cursor.fetchall()
-    for i in query_result:
-        print(i)
-def remove(tableName, primaryKey):
-    cursor.execute("""DELETE FROM """ + tableName + """ WHERE ID= """ + primaryKey)
-def update(tableName, columnName, newValue, primaryKey):
-    cursor.execute(
-        """UPDATE """ + tableName + """ SET""" + columnName + """= """ + newValue + """WHERE ID= """ + primaryKey)
-def insert(type, tableName):
-    if type == 1:
-        fname = input("First name: ")
-        lname = input("Last name: ")
-        id = input("ID: ")
-        gradyear = input("Graduation Year: ")
-        major = input("Major: ")
-        email = input("email(Everything before @): ")
-        cursor.execute("""INSERT INTO STUDENT VALUES('%s', '%s', '%s', '%s','%s', '%s');""" % (
-        fname, lname, id, gradyear, major, email))
-    elif type == 2:
-        fname = input("Instructor First name: ")
-        lname = input("Instructor Last name: ")
-        id = input("ID: ")
-        title = input("Title: ")
-        dept = input("Department: ")
-        email = input("email(Everything before @): ")
-        hireyear = input("Year Hired: ")
-        cursor.execute(
-            """INSERT INTO INSTRUCTOR VALUES('%s', '%s', '%s', '%s','%s', '%s','%s');""" % (
-            fname, lname, id, title, dept, email, hireyear))
-    elif type == 3:
-        fname = input("Admin First name: ")
-        lname = input("Admin Last name: ")
-        id = input("ID: ")
-        title = input("Title: ")
-        email = input("email(Everything before @): ")
-        office = input("Office Number: ")
-        cursor.execute(
-            """INSERT INTO ADMIN VALUES('%s', '%s', '%s', '%s','%s', '%s);""" % (
-            fname, lname, id, title, office, email))
-    elif type == 4:
-        title = input("Course Title: ")
-        crn = input("Course CRN #: ")
-        dept = input("Course Department: ")
-        prof = input("Course Professor Name: ")
-        time = inpu
-t("Course time(e.g 2:00-2:50PM): ")
-        days = input("Course days of the week(Letters only): ")
-        semester = input("Course Semester: ")
-        year = input("Course Year: ")
-        credit = input("Credits of Course:")
-        cursor.execute(
-            """INSERT INTO COURSE VALUES('%s', '%s', '%s', '%s','%s', '%s', '%s','%s', '%s');""" % (
-            title, crn, dept, prof, time, days, semester, year, credit))
-'''
-
 
