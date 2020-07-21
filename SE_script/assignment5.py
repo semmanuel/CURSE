@@ -119,31 +119,40 @@ CREDITS			TEXT					NOT NULL)
 cursor.execute(sql_command)
 ###################################################################
 # Student list
-cursor.execute("""INSERT INTO STUDENT VALUES(00010001, 'Isaac', 'Newton', 1668, 'BSAS', 'newtoni');""")
+cursor.execute("""INSERT INTO STUDENT VALUES(00010001, 'ISAAC', 'NEWTON', 1668, 'BSAS', 'newtoni');""")
 
-cursor.execute("""INSERT INTO STUDENT VALUES(00010002, 'Marie', 'Curie', 1903, 'BSAS', 'curiem');""")
+cursor.execute("""INSERT INTO STUDENT VALUES(00010002, 'MARIE', 'CURIE', 1903, 'BSAS', 'curiem');""")
 
-cursor.execute("""INSERT INTO STUDENT VALUES(00010003, 'Nikola', 'Tesla', 1878, 'BSEE', 'telsan');""")
+cursor.execute("""INSERT INTO STUDENT VALUES(00010003, 'Nikola', 'TESLA', 1878, 'BSEE', 'telsan');""")
 
-cursor.execute("""INSERT INTO STUDENT VALUES(00010004, 'Thomas', 'Edison', 1879, 'BSEE', 'notcool');""")
+cursor.execute("""INSERT INTO STUDENT VALUES(00010004, 'THOMAS', 'EDISON', 1879, 'BSEE', 'notcool');""")
 
-cursor.execute("""INSERT INTO STUDENT VALUES(00010005, 'John', 'von Neumann', 1923, 'BSCO', 'vonneumannj');""")
+cursor.execute("""INSERT INTO STUDENT VALUES(00010005, 'JOHN', 'VON NEUMANN', 1923, 'BSCO', 'vonneumannj');""")
 
-cursor.execute("""INSERT INTO STUDENT VALUES(00010006, 'Grace', 'Hopper', 1928, 'BCOS', 'hopperg');""")
+cursor.execute("""INSERT INTO STUDENT VALUES(00010006, 'GRACE', 'HOPPER', 1928, 'BCOS', 'hopperg');""")
 
-cursor.execute("""INSERT INTO STUDENT VALUES(00010007, 'Mae', 'Jemison', 1981, 'BSCH', 'jemisonm');""")
+cursor.execute("""INSERT INTO STUDENT VALUES(00010007, 'MAE', 'JEMISON', 1981, 'BSCH', 'jemisonm');""")
 
-cursor.execute("""INSERT INTO STUDENT VALUES(00010008, 'Mark', 'Dean', 1979, 'BSCO', 'deanm');""")
+cursor.execute("""INSERT INTO STUDENT VALUES(00010008, 'MARK', 'DEAN', 1979, 'BSCO', 'deanm');""")
 
-cursor.execute("""INSERT INTO STUDENT VALUES(00010009, 'Michael', 'Faraday', 1812, 'BSAS', 'faradaym');""")
+cursor.execute("""INSERT INTO STUDENT VALUES(00010009, 'MICHAEL', 'FARADAY', 1812, 'BSAS', 'faradaym');""")
 
-cursor.execute("""INSERT INTO STUDENT VALUES(00010010, 'Ada', 'Lovelace', 1832, 'BCOS', 'lovelacea');""")
+cursor.execute("""INSERT INTO STUDENT VALUES(00010010, 'ADA', 'LOVELACE', 1832, 'BCOS', 'lovelacea');""")
 
-cursor.execute("""INSERT INTO STUDENT VALUES(00010011, 'Zach', 'Jersey', 1976, 'BSME', 'jerseyz');""")
+cursor.execute("""INSERT INTO STUDENT VALUES(00010011, 'ZACH', 'JERSEY', 1976, 'BSME', 'jerseyz');""")
 
-cursor.execute("""INSERT INTO STUDENT VALUES(00010012, 'George', 'Floyd', 2020, 'BSEE', 'floydg');""")
-#database.commit()
+cursor.execute("""INSERT INTO STUDENT VALUES(00010012, 'GEORGE', 'FLOYD', 2020, 'BSEE', 'floydg');""")
 
+#Roster Tabley
+cursor.execute("""INSERT INTO ROSTER VALUES ('1235', '00010002');""")
+
+cursor.execute("""INSERT INTO ROSTER VALUES ('4553', '00010005');""")
+
+cursor.execute("""INSERT INTO ROSTER VALUES ('6543', '00010003');""")
+
+cursor.execute("""INSERT INTO ROSTER VALUES ('0998', '00010000');""")
+
+cursor.execute("""INSERT INTO ROSTER VALUES ('3456', '00010001');""")
 # Instructor list
 cursor.execute(
     """INSERT INTO INSTRUCTOR VALUES(00020001, 'Joseph', 'Fourier', 'Full Prof.', 1820, 'BSEE', 'fourierj');""")
@@ -176,8 +185,6 @@ cursor.execute(
     """INSERT INTO COURSE VALUES('ELEC4500', '9825', 'BSME', 'TBD', '2:00-2:50PM', 'MT', 'Fall', '2019', '4 ');""")
 cursor.execute(
     """INSERT INTO COURSE VALUES('DUMMY', 'VARIABLE', 'DUMMY', 'VARIABLE', '8am', 'DUMMY', 'VARIABLE', 'VARIABLE', '');""")
-
-# Debating on having theses lines or not
 cursor.execute(
   """INSERT INTO COURSE VALUES('Rewrite Everything With Sin Functions ',            '31798', 	'BSEE', 	'JOSEPH FOURIER', '12:00 pm - 12:50pm',		'MTR',	'Summer', '2020',	'4 Credits');""")
 cursor.execute(
@@ -188,8 +195,6 @@ cursor.execute(
   """INSERT INTO COURSE VALUES('Cryptanalysis: Send Me a Message I Cant Decrypt',   '31431', 	'BSCO',		'ALAN TURING',	'11:00 am - 12:20 pm',	'WF',		'Summer', '2020',	'4 Credits');""")
 cursor.execute(
   """INSERT INTO COURSE VALUES('Black Holes Imagery:Getting Yall Out of The Dark', '31739',	    'BCOS',		'JOSEPH FOURIER',	'1:00 pm - 2:50 pm',		'MF',		'Summer', '2020',	'4 Credits');""")
-#database.commit()
-
 
 # Instructor Schedule
 cursor.execute(
@@ -203,74 +208,7 @@ cursor.execute(
 cursor.execute(
   """INSERT INTO INSTRUCTOR_SCHEDULE VALUES('Black Holes Imagery:Getting Yall Out of The Dark',		'31739',	'BCOS',		'Katie Bouman',				'1:00 pm - 2:50 pm',		'MF',		'Summer 2020',	'4 Credits');""")
 database.commit()
-'''
-# QUERY FOR ALL
-print("Entire Student table")
-cursor.execute("""SELECT * FROM STUDENT""")
-query_result = cursor.fetchall()
-for i in query_result:
-    print(i)
 
-# QUERY FOR ALL
-print("Entire Instructor table")
-cursor.execute("""SELECT * FROM INSTRUCTOR""")
-query_result = cursor.fetchall()
-for i in query_result:
-    print(i)
-
-# QUERY FOR ALL
-print("Entire Admin table")
-cursor.execute("""SELECT * FROM ADMIN""")
-query_result = cursor.fetchall()
-for i in query_result:
-    print(i)
-
-# QUERY FOR ALL
-print("Entire Course table")
-cursor.execute("""SELECT * FROM COURSE""")
-query_result = cursor.fetchall()
-for i in query_result:
-    print(i)
-
-# Potential Instructors matched with the course
-cursor.execute(
-    """SELECT COURSE.TITLE,COURSE.DEPT, NAME, SURNAME FROM COURSE, INSTRUCTOR WHERE COURSE.DEPT = INSTRUCTOR.DEPT;""")
-# Check for professor
-query_result = cursor.fetchall()
-try:
-    if query_result[0] != 0:
-        print("Potential Instructors for each Course: ")
-        for i in query_result:
-            print(i)
-except IndexError:
-    print("No Instructors found for courses")
-
-# Query for Course Titles and CRN
-print("All Available Course Titles and Corresponding CRNs")
-cursor.execute("""SELECT TITLE, CRN FROM COURSE""")
-query_result = cursor.fetchall()
-for i in query_result:
-    print(i)
-
-# Remove instructor
-cursor.execute("""DELETE FROM INSTRUCTOR WHERE ID= 00020004""")
-
-# QUERY FOR Instructor
-print("Entire Instructor table")
-cursor.execute("""SELECT * FROM INSTRUCTOR""")
-query_result = cursor.fetchall()
-for i in query_result:
-    print(i)
-
-# Update ADMIN
-cursor.execute("""UPDATE ADMIN SET TITLE= 'Past President' WHERE ID= 00030001""")
-# QUERY FOR ALL
-print("Entire Admin table")
-cursor.execute("""SELECT * FROM ADMIN""")
-query_result = cursor.fetchall()
-for i in query_result:
-    print(i)
-'''
 class User:
     def __init__(self, fname: str, lname, idNum):
         self.firstName = fname
@@ -808,6 +746,33 @@ class Instructor(User):
                     print(i)
         except IndexError:
             print("No Roster found\n")
+
+#Printing all the courses schedule present in the database
+    def searchRoster(self):
+        #searh if student is taking the class
+        student_name      = input('''Enter Student's first name:\n''')
+        student_name=student_name.upper()
+
+        student_last_name = input('''Enter Student's last name:\n''')
+        student_last_name = student_last_name.upper()
+
+        # Check if student is registered in course, in general
+        cursor.execute(
+        """SELECT * FROM STUDENT WHERE STUDENT.NAME = ('%s') AND STUDENT.SURNAME = ('%s');""" %(student_name, student_last_name))
+        query_result = cursor.fetchall()
+
+        # if query_result is not empty then it means that there is
+        if query_result !=[]:
+            cursor.execute(
+            """SELECT *  FROM ROSTER, STUDENT WHERE STUDENT.ID = ROSTER.ID ;""" )
+            query_result1=cursor.fetchall()
+            if query_result1!=[]:# compare the ID's if not empty then print the student from first query
+                for i in query_result:
+                    print(i)
+        else:
+            print("Student does not attend institution\n")
+
+
     def printSchedule(self):
         instructor_name = input("Please enter your first and last name:\n")
         instructor_name = instructor_name.upper()
@@ -934,7 +899,7 @@ def main ():
         elif (TYPE == 'INSTRUCTOR'):
             instructor = Instructor(first_name, last_name, idNumber)
             while True:
-                option = input('Would you like to 1) print schedule, 2) print roster, 3) assemble roster 4) Search all courses 5) Search Course by parameter 6) Log out: \n')
+                option = input('Would you like to 1) print schedule, 2) print roster, 3) assemble roster 4) Search all courses 5) Search Course by parameter 6) Search for Roster  7)Log out: \n')
 
                 if option == '1':
                     instructor.printSchedule()
@@ -947,9 +912,11 @@ def main ():
                 elif option == '5':
                     instructor.searchCourses()
                 elif option == '6':
+                    instructor.searchRoster()
+                elif option == '7':
                     print("Thank you using CURSE!\n")
                     break
-                elif option != '1' or option != '2' or option != '3' or option != '4' or option != '5' or option != '6':
+                elif option != '1' or option != '2' or option != '3' or option != '4' or option != '5' or option != '6'or option !='7':
                     print('Invalid numbering try again:\n')
 
         elif (TYPE == 'ADMIN'):
@@ -994,66 +961,4 @@ database.commit()
 
 # close the connection
 database.close()
-
-'''
-######################################################################
-# Functions for future use
-def queryAll(tableName):
-    print("Entire " + tableName + " table")
-    cursor.execute("""SELECT * FROM """ + tableName)
-    query_result = cursor.fetchall()
-    for i in query_result:
-        print(i)
-def remove(tableName, primaryKey):
-    cursor.execute("""DELETE FROM """ + tableName + """ WHERE ID= """ + primaryKey)
-def update(tableName, columnName, newValue, primaryKey):
-    cursor.execute(
-        """UPDATE """ + tableName + """ SET""" + columnName + """= """ + newValue + """WHERE ID= """ + primaryKey)
-def insert(type, tableName):
-    if type == 1:
-        fname = input("First name: ")
-        lname = input("Last name: ")
-        id = input("ID: ")
-        gradyear = input("Graduation Year: ")
-        major = input("Major: ")
-        email = input("email(Everything before @): ")
-        cursor.execute("""INSERT INTO STUDENT VALUES('%s', '%s', '%s', '%s','%s', '%s');""" % (
-        fname, lname, id, gradyear, major, email))
-    elif type == 2:
-        fname = input("Instructor First name: ")
-        lname = input("Instructor Last name: ")
-        id = input("ID: ")
-        title = input("Title: ")
-        dept = input("Department: ")
-        email = input("email(Everything before @): ")
-        hireyear = input("Year Hired: ")
-        cursor.execute(
-            """INSERT INTO INSTRUCTOR VALUES('%s', '%s', '%s', '%s','%s', '%s','%s');""" % (
-            fname, lname, id, title, dept, email, hireyear))
-    elif type == 3:
-        fname = input("Admin First name: ")
-        lname = input("Admin Last name: ")
-        id = input("ID: ")
-        title = input("Title: ")
-        email = input("email(Everything before @): ")
-        office = input("Office Number: ")
-        cursor.execute(
-            """INSERT INTO ADMIN VALUES('%s', '%s', '%s', '%s','%s', '%s);""" % (
-            fname, lname, id, title, office, email))
-    elif type == 4:
-        title = input("Course Title: ")
-        crn = input("Course CRN #: ")
-        dept = input("Course Department: ")
-        prof = input("Course Professor Name: ")
-        time = inpu
-t("Course time(e.g 2:00-2:50PM): ")
-        days = input("Course days of the week(Letters only): ")
-        semester = input("Course Semester: ")
-        year = input("Course Year: ")
-        credit = input("Credits of Course:")
-        cursor.execute(
-            """INSERT INTO COURSE VALUES('%s', '%s', '%s', '%s','%s', '%s', '%s','%s', '%s');""" % (
-            title, crn, dept, prof, time, days, semester, year, credit))
-'''
-
 
