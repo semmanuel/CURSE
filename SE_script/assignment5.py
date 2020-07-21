@@ -77,16 +77,15 @@ CREDITS		INT		NOT NULL)
 ;"""
 # execute the statement
 cursor.execute(sql_command)
-####################################################################
+
+###################################################################
 # SQL command to create a table in the database
 sql_command = """CREATE TABLE ROSTER (
 CRN 		INT 	NOT NULL,
 ID      	INT		NOT NULL,
-INSTRUCTID      	INT		NOT NULL,
 FOREIGN KEY (CRN) REFERENCES COURSE(CRN),
 FOREIGN KEY (ID) REFERENCES STUDENT(ID),
-FOREIGN KEY (INSTRUCTID) REFERENCES INSTRUCTOR(ID),
-UNIQUE (CRN, ID, INSTRUCTID))
+UNIQUE (CRN, ID))
 ;"""
 # execute the statement
 cursor.execute(sql_command)
@@ -180,15 +179,15 @@ cursor.execute(
 
 # Debating on having theses lines or not
 '''cursor.execute(
-  """INSERT INTO COURSE VALUES('Rewrite Everything With Sin Functions ', 							'31798', 	'BSEE', 	'Joseph Fourier',     '12:00 pm - 12:50pm',		'MTR',	'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('Rewrite Everything With Sin Functions ',            '31798', 	'BSEE', 	'JOSEPH FOURIER', '12:00 pm - 12:50pm',		'MTR',	'Summer', '2020',	'4 Credits');""")
 cursor.execute(
-  """INSERT INTO COURSE VALUES('A Winner Is a Dreamer Who Never Gives Up',   					'31039', 	'HUSS', 	'Nelson Mandela', 		'10:00 am - 12:50 pm', 	'TR',		'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('A Winner Is a Dreamer Who Never Gives Up',          '31039', 	'HUSS', 	'NELSON MANDELA', '10:00 am - 12:50 pm', 	'TR',		'Summer', '2020',	'4 Credits');""")
 cursor.execute(
-  """INSERT INTO COURSE VALUES('Become the Father of Observational Astronomy', 				'31748', 	'BSAS', 	'Galileo Galilei',     '9:30  am - 10:50 am',  'WF',		'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('Become the Father of Observational Astronomy',      '31748', 	'BSAS', 	'GALILEO GALILEI', '9:30  am - 10:50 am',  'WF',		'Summer', '2020',	'4 Credits');""")
 cursor.execute(
-  """INSERT INTO COURSE VALUES('Cryptanalysis: Send Me a Message I Cant Decrypt',			'31431', 	'BSCO',		'Alan Turing',				'11:00 am - 12:20 pm',	'WF',		'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('Cryptanalysis: Send Me a Message I Cant Decrypt',   '31431', 	'BSCO',		'ALAN TURING',	'11:00 am - 12:20 pm',	'WF',		'Summer', '2020',	'4 Credits');""")
 cursor.execute(
-  """INSERT INTO COURSE VALUES('Black Holes Imagery:Getting Yall Out of The Dark',		 '31739',	'BCOS',		'Katie Bouman',				'1:00 pm - 2:50 pm',		'MF',		'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('Black Holes Imagery:Getting Yall Out of The Dark', '31739',	    'BCOS',		'KATIE BOUMAN',	'1:00 pm - 2:50 pm',		'MF',		'Summer', '2020',	'4 Credits');""")
 #database.commit()
 '''
 
@@ -204,35 +203,74 @@ cursor.execute(
 cursor.execute(
   """INSERT INTO INSTRUCTOR_SCHEDULE VALUES('Black Holes Imagery:Getting Yall Out of The Dark',		'31739',	'BCOS',		'Katie Bouman',				'1:00 pm - 2:50 pm',		'MF',		'Summer 2020',	'4 Credits');""")
 database.commit()
+'''
+# QUERY FOR ALL
+print("Entire Student table")
+cursor.execute("""SELECT * FROM STUDENT""")
+query_result = cursor.fetchall()
+for i in query_result:
+    print(i)
 
+# QUERY FOR ALL
+print("Entire Instructor table")
+cursor.execute("""SELECT * FROM INSTRUCTOR""")
+query_result = cursor.fetchall()
+for i in query_result:
+    print(i)
 
+# QUERY FOR ALL
+print("Entire Admin table")
+cursor.execute("""SELECT * FROM ADMIN""")
+query_result = cursor.fetchall()
+for i in query_result:
+    print(i)
 
-#Roster Table
+# QUERY FOR ALL
+print("Entire Course table")
+cursor.execute("""SELECT * FROM COURSE""")
+query_result = cursor.fetchall()
+for i in query_result:
+    print(i)
 
+# Potential Instructors matched with the course
+cursor.execute(
+    """SELECT COURSE.TITLE,COURSE.DEPT, NAME, SURNAME FROM COURSE, INSTRUCTOR WHERE COURSE.DEPT = INSTRUCTOR.DEPT;""")
+# Check for professor
+query_result = cursor.fetchall()
+try:
+    if query_result[0] != 0:
+        print("Potential Instructors for each Course: ")
+        for i in query_result:
+            print(i)
+except IndexError:
+    print("No Instructors found for courses")
 
-#"cursor.execute(
-#    """INSERT INTO ROSTER VALUES('0235 ', 		'00010001', 	, 	'Joseph Fourier',     '12:00 pm - 12:50pm',		'MTR',	'Summer 2020',	'4 Credits');""")
-#cursor.execute(
-#  """INSERT INTO ROSTER VALUES('1235',   		'67821234', 	'HUSS', 	'Nelson Mandela', 		'10:00 am - 12:50 pm', 	'TR',		'Summer 2020',	'4 Credits');""")
-#cursor.execute(
-#  """INSERT INTO ROSTER VALUES('6543', 			'00012222', 	'BSAS', 	'Galileo Galilei',     '9:30  am - 10:50 am',  'WF',		'Summer 2020',	'4 Credits');""")
-#cursor.execute(
-#  """INSERT INTO ROSTER VALUES('0944',			 '7753318', 	'BSCO',		'Alan Turing',				'11:00 am - 12:20 pm',	'WF',		'Summer 2020',	'4 Credits');""")
-#cursor.execute(
-#  """INSERT INTO ROSTER VALUES('9753',		   '9999999',	  'BCOS',		'Katie Bouman',				'1:00 pm - 2:50 pm',		'MF',		'Summer 2020',	'4 Credits');""")
-#database.commit()
-#VALUES(?,?,?,?,?,?,?,?,?)
-"""CRN 		INT 	NOT NULL,
-ID      	INT		NOT NULL,
-INSTRUCTID      	INT		NOT NULL,
-FOREIGN KEY (CRN) REFERENCES COURSE(CRN),
-FOREIGN KEY (ID) REFERENCES STUDENT(ID),
-FOREIGN KEY (INSTRUCTID) REFERENCES INSTRUCTOR(ID),
-UNIQUE (CRN, ID, INSTRUCTID))
-;"""
+# Query for Course Titles and CRN
+print("All Available Course Titles and Corresponding CRNs")
+cursor.execute("""SELECT TITLE, CRN FROM COURSE""")
+query_result = cursor.fetchall()
+for i in query_result:
+    print(i)
 
+# Remove instructor
+cursor.execute("""DELETE FROM INSTRUCTOR WHERE ID= 00020004""")
 
+# QUERY FOR Instructor
+print("Entire Instructor table")
+cursor.execute("""SELECT * FROM INSTRUCTOR""")
+query_result = cursor.fetchall()
+for i in query_result:
+    print(i)
 
+# Update ADMIN
+cursor.execute("""UPDATE ADMIN SET TITLE= 'Past President' WHERE ID= 00030001""")
+# QUERY FOR ALL
+print("Entire Admin table")
+cursor.execute("""SELECT * FROM ADMIN""")
+query_result = cursor.fetchall()
+for i in query_result:
+    print(i)
+'''
 class User:
     def __init__(self, fname: str, lname, idNum):
         self.firstName = fname
@@ -653,11 +691,98 @@ class Admin(User):
             except IndexError:
                 print("Authorization failed")
 
-    def searchRoster(self):
-        print("This is the search roster function")
+    def link_unlinkStudent(self):
+        while True:
+            print("confirm credentials for admin use\n")
+            username = input("Enter your username: \n")
+            password = getpass.getpass(prompt="Enter your password: \n", stream=None)
+            # Query for login
+            cursor.execute(
+                """SELECT ID FROM USER WHERE USERNAME = ('%s') AND PASSWORD = ('%s') AND TYPE = 'ADMIN';""" % (
+                username, password))
+            query_result = cursor.fetchall()
+            try:
+                if query_result[0] != 0:
+                    print("Authorization Successful")
+                    ans = input("Would you like to link or unlink a student to a course(1 to link, 2 to unlink)? \n")
+                    while True:
+                        crn = input("Enter the crn to add to Course Roster: \n")
+                        # Check to see if course exist
+                        cursor.execute(
+                            """SELECT TITLE FROM COURSE WHERE CRN = ('%s');""" % (crn))
+                        query_result = cursor.fetchall()
+                        try:
+                            if query_result[0] != 0:
+                                print("Course Found\n")
+                                while True:
+                                    studid = input("Enter iD of Student (Q to quit)\n")
+                                    studid = studid.upper()
+                                    if studid == "Q":
+                                        break
+                                    else:
+                                        cursor.execute(
+                                            """SELECT NAME,SURNAME FROM STUDENT WHERE ID = ('%s');""" % (studid))
+                                        query_result = cursor.fetchall()
+                                        try:
+                                            if query_result[0] != 0:
+                                                if ans == "1":
+                                                    cursor.execute("""INSERT INTO ROSTER VALUES('%s', '%s');""" % (crn, studid))
+                                                    print("Student found and added to Roster\n")
+                                                elif ans == "2":
+                                                    cursor.execute(
+                                                        """DELETE FROM ROSTER WHERE ID= ('%s') AND CRN= ('%s')""" % (
+                                                        studid, crn))
+                                        except IndexError:
+                                            print("Student does not exist/ID is invalid\n")
+                                break
+                        except IndexError:
+                            print("Course does not exist/ID is invalid\n")
+                break
+            except IndexError:
+                print("Authorization failed")
 
-    def printCourse(self):
-        print("This is the print course function")
+    def link_unlinkInstructor(self):
+        while True:
+            print("confirm credentials for admin use\n")
+            username = input("Enter your username: \n")
+            password = getpass.getpass(prompt="Enter your password: \n", stream=None)
+            # Query for login
+            cursor.execute(
+                """SELECT ID FROM USER WHERE USERNAME = ('%s') AND PASSWORD = ('%s') AND TYPE = 'ADMIN';""" % (
+                    username, password))
+            query_result = cursor.fetchall()
+            try:
+                if query_result[0] != 0:
+                    print("Authorization Successful")
+                    ans = input(
+                        "Would you like to link or unlink a instructor to a course(1 to link, 2 to unlink)? \n")
+                    while True:
+                        crn = input("Enter the crn to add to Course Roster: (Q to quit) \n")
+                        if crn == "Q" or crn == "q":
+                            break
+                        else:
+                            # Check to see if course exist
+                            cursor.execute(
+                                """SELECT TITLE FROM COURSE WHERE CRN = ('%s');""" % (crn))
+                            query_result = cursor.fetchall()
+                            try:
+                                if query_result[0] != 0:
+                                    print("Course Found\n")
+                                    instructorname = input("Enter First & Last Name of Instructor (Q to quit)\n")
+                                    instructorname = instructorname.upper()
+
+                                    if query_result[0] != 0:
+                                        if ans == "1":
+                                            cursor.execute("""UPDATE COURSE SET INSTRUCTOR= ('%s') WHERE CRN= ('%s')""" % (instructorname,crn))
+                                            print("Instructor " + instructorname + " added to course\n")
+                                        elif ans == "2":
+                                            cursor.execute("""UPDATE COURSE SET INSTRUCTOR= ('TBD') WHERE CRN= ('%s')""" % (crn))
+
+                            except IndexError:
+                                print("Course does not exist/ID is invalid\n")
+                break
+            except IndexError:
+                print("Authorization failed")
 
     def printRoster(self):
         print("This is the print roster function")
@@ -820,7 +945,9 @@ def main ():
         elif (TYPE == 'ADMIN'):
             admin = Admin(first_name, last_name, idNumber)
             while True:
-                option = input('Would you like to: 1)add or remove course from the system 2)add or remove instructors/students 3) Search all courses 4) Search Course by parameter 5) Log Out: \n')
+                option = input('Would you like to: 1)add or remove course from the system 2)add or remove '
+                               'instructors/students 3) Search all courses 4) Search Course by parameter '
+                               '5)Link/Unlink student from course 6)Link/Unlink instructor from course 7) Log Out: \n')
                 if (option == '1'):
                     admin.add_removeCourse()
                 elif option == '2':
@@ -830,9 +957,13 @@ def main ():
                 elif option == '4':
                     admin.searchCourses()
                 elif option == '5':
+                    admin.link_unlinkStudent()
+                elif option == '6':
+                    admin.link_unlinkInstructor()
+                elif option == '7':
                     print("Thank you using CURSE!\n")
                     break
-                elif option != '1' or option != '2' or option != '3' or option != '4' or option != '5':
+                elif option != '1' or option != '2' or option != '3' or option != '4' or option != '5' or option != '6' or option != '7':
                     print('Invalid numbering try again:\n')
 
         elif TYPE != 'STUDENT' or TYPE != 'INSTRUCTOR' or TYPE != 'ADMIN':
@@ -853,4 +984,66 @@ database.commit()
 
 # close the connection
 database.close()
+
+'''
+######################################################################
+# Functions for future use
+def queryAll(tableName):
+    print("Entire " + tableName + " table")
+    cursor.execute("""SELECT * FROM """ + tableName)
+    query_result = cursor.fetchall()
+    for i in query_result:
+        print(i)
+def remove(tableName, primaryKey):
+    cursor.execute("""DELETE FROM """ + tableName + """ WHERE ID= """ + primaryKey)
+def update(tableName, columnName, newValue, primaryKey):
+    cursor.execute(
+        """UPDATE """ + tableName + """ SET""" + columnName + """= """ + newValue + """WHERE ID= """ + primaryKey)
+def insert(type, tableName):
+    if type == 1:
+        fname = input("First name: ")
+        lname = input("Last name: ")
+        id = input("ID: ")
+        gradyear = input("Graduation Year: ")
+        major = input("Major: ")
+        email = input("email(Everything before @): ")
+        cursor.execute("""INSERT INTO STUDENT VALUES('%s', '%s', '%s', '%s','%s', '%s');""" % (
+        fname, lname, id, gradyear, major, email))
+    elif type == 2:
+        fname = input("Instructor First name: ")
+        lname = input("Instructor Last name: ")
+        id = input("ID: ")
+        title = input("Title: ")
+        dept = input("Department: ")
+        email = input("email(Everything before @): ")
+        hireyear = input("Year Hired: ")
+        cursor.execute(
+            """INSERT INTO INSTRUCTOR VALUES('%s', '%s', '%s', '%s','%s', '%s','%s');""" % (
+            fname, lname, id, title, dept, email, hireyear))
+    elif type == 3:
+        fname = input("Admin First name: ")
+        lname = input("Admin Last name: ")
+        id = input("ID: ")
+        title = input("Title: ")
+        email = input("email(Everything before @): ")
+        office = input("Office Number: ")
+        cursor.execute(
+            """INSERT INTO ADMIN VALUES('%s', '%s', '%s', '%s','%s', '%s);""" % (
+            fname, lname, id, title, office, email))
+    elif type == 4:
+        title = input("Course Title: ")
+        crn = input("Course CRN #: ")
+        dept = input("Course Department: ")
+        prof = input("Course Professor Name: ")
+        time = inpu
+t("Course time(e.g 2:00-2:50PM): ")
+        days = input("Course days of the week(Letters only): ")
+        semester = input("Course Semester: ")
+        year = input("Course Year: ")
+        credit = input("Credits of Course:")
+        cursor.execute(
+            """INSERT INTO COURSE VALUES('%s', '%s', '%s', '%s','%s', '%s', '%s','%s', '%s');""" % (
+            title, crn, dept, prof, time, days, semester, year, credit))
+'''
+
 
