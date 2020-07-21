@@ -70,7 +70,7 @@ CRN 		INT 	PRIMARY KEY 	NOT NULL,
 DEPT		CHAR(4)	NOT NULL,
 INSTRUCTOR	TEXT 	NOT NULL,
 TIME		TEXT 	NOT NULL,
-DAYs_OF_WEEK	TEXT 	NOT NULL,
+DAYS_OF_WEEK	TEXT 	NOT NULL,
 SEMESTER	TEXT 	NOT NULL,
 YEAR		INT 	NOT NULL,
 CREDITS		INT		NOT NULL)
@@ -178,18 +178,18 @@ cursor.execute(
     """INSERT INTO COURSE VALUES('DUMMY', 'VARIABLE', 'DUMMY', 'VARIABLE', '8am', 'DUMMY', 'VARIABLE', 'VARIABLE', '');""")
 
 # Debating on having theses lines or not
-'''cursor.execute(
+cursor.execute(
   """INSERT INTO COURSE VALUES('Rewrite Everything With Sin Functions ',            '31798', 	'BSEE', 	'JOSEPH FOURIER', '12:00 pm - 12:50pm',		'MTR',	'Summer', '2020',	'4 Credits');""")
 cursor.execute(
   """INSERT INTO COURSE VALUES('A Winner Is a Dreamer Who Never Gives Up',          '31039', 	'HUSS', 	'NELSON MANDELA', '10:00 am - 12:50 pm', 	'TR',		'Summer', '2020',	'4 Credits');""")
 cursor.execute(
-  """INSERT INTO COURSE VALUES('Become the Father of Observational Astronomy',      '31748', 	'BSAS', 	'GALILEO GALILEI', '9:30  am - 10:50 am',  'WF',		'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('Become the Father of Observational Astronomy',      '31748', 	'BSAS', 	'JOSEPH FOURIER', '9:30  am - 10:50 am',  'WF',		'Summer', '2020',	'4 Credits');""")
 cursor.execute(
   """INSERT INTO COURSE VALUES('Cryptanalysis: Send Me a Message I Cant Decrypt',   '31431', 	'BSCO',		'ALAN TURING',	'11:00 am - 12:20 pm',	'WF',		'Summer', '2020',	'4 Credits');""")
 cursor.execute(
-  """INSERT INTO COURSE VALUES('Black Holes Imagery:Getting Yall Out of The Dark', '31739',	    'BCOS',		'KATIE BOUMAN',	'1:00 pm - 2:50 pm',		'MF',		'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('Black Holes Imagery:Getting Yall Out of The Dark', '31739',	    'BCOS',		'JOSEPH FOURIER',	'1:00 pm - 2:50 pm',		'MF',		'Summer', '2020',	'4 Credits');""")
 #database.commit()
-'''
+
 
 # Instructor Schedule
 cursor.execute(
@@ -648,7 +648,9 @@ class Admin(User):
                             try:
                                 instructor_id = input("Instructor iD: \n")
                                 first_name = input("Instructor First Name: \n")
+                                first_name = first_name.upper()
                                 last_name = input("Instructor Last Name: \n")
+                                last_name = last_name.upper()
                                 Title = input("Instructor title: \n")
                                 hireYear = input("Instructor hireYear: \n")
                                 DEPT = input("Instructor Department: \n")
@@ -662,7 +664,9 @@ class Admin(User):
                             try:
                                 student_id = input("Student iD: \n")
                                 firstname = input("Student First Name: \n")
+                                firstname = firstname.upper()
                                 lastname = input("Student Last Name: \n")
+                                lastname = lastname.upper()
                                 gradyear = input("Student Graduation Year: \n")
                                 major = input("Student Major: \n")
                                 email = input("Student Email: \n")
@@ -805,14 +809,20 @@ class Instructor(User):
         except IndexError:
             print("No Roster found\n")
     def printSchedule(self):
-        cursor.execute("""SELECT * SCHEDULE""")
+        instructor_name = input("Please enter your first and last name:\n")
+        instructor_name = instructor_name.upper()
+        print(instructor_name)
+        cursor.execute(
+            """SELECT CRN, TITLE, TIME, DAYS_OF_WEEK FROM COURSE WHERE INSTRUCTOR= ('%s')""" % (instructor_name))
+        # Check for Roster
         query_result = cursor.fetchall()
-        if query_result != []:
-            for i in query_result:
-                print(i)
-        else:
-            print('There are no courses in the schedule\n')
-    '''Printing all the courses schedule present in the database'''
+        try:
+            if query_result[0] != 0:
+                print("Instructor Schedule for  " + instructor_name)
+                for i in query_result:
+                    print(i)
+        except IndexError:
+            print("No Schedule found\n")
 
     def assembleRoster(self):
         while True:
