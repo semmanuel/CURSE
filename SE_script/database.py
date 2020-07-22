@@ -103,19 +103,6 @@ CREDITS			TEXT					NOT NULL)
 # create table
 cursor.execute(sql_command)
 ###################################################################
-sql_command = """CREATE TABLE INSTRUCTOR_SCHEDULE (  
-TITLE			TEXT 					NOT NULL,
-CRN				CHAR(4)	PRIMARY KEY		NOT NULL,
-DEPT			TEXT 					NOT NULL,
-INSTRUCTOR		TEXT 					NOT NULL,
-TIME			TEXT					NOT NULL,
-DAYS_OF_WEEK	TEXT					NOT NULL,
-SEMESTER		TEXT					NOT NULL,
-CREDITS			TEXT					NOT NULL)
-;"""
-
-cursor.execute(sql_command)
-###################################################################
 # Student list
 cursor.execute("""INSERT INTO STUDENT VALUES(00010001, 'ISAAC', 'NEWTON', 1668, 'BSAS', 'newtoni');""")
 
@@ -141,7 +128,7 @@ cursor.execute("""INSERT INTO STUDENT VALUES(00010011, 'ZACH', 'JERSEY', 1976, '
 
 cursor.execute("""INSERT INTO STUDENT VALUES(00010012, 'GEORGE', 'FLOYD', 2020, 'BSEE', 'floydg');""")
 
-#Roster Tabley
+# Roster Table
 cursor.execute("""INSERT INTO ROSTER VALUES ('1235', '00010002');""")
 
 cursor.execute("""INSERT INTO ROSTER VALUES ('4553', '00010005');""")
@@ -194,15 +181,13 @@ cursor.execute(
 cursor.execute(
   """INSERT INTO COURSE VALUES('Black Holes Imagery:Getting Yall Out of The Dark', '31739',	    'BCOS',		'JOSEPH FOURIER',	'1:00 pm - 2:50 pm',		'MF',		'Summer', '2020',	'4 Credits');""")
 
-# Instructor Schedule
 cursor.execute(
-  """INSERT INTO INSTRUCTOR_SCHEDULE VALUES('Rewrite Everything With Sin Functions ', 							'31798', 	'BSEE', 	'Joseph Fourier',     '12:00 pm - 12:50pm',		'MTR',	'Summer 2020',	'4 Credits');""")
+  """INSERT INTO USER VALUES('364670','ELIJAH', 'MCCAIN', '123@BLM.edu', 'equality123','STUDENT');""")
 cursor.execute(
-  """INSERT INTO INSTRUCTOR_SCHEDULE VALUES('A Winner Is a Dreamer Who Never Gives Up',   					'31039', 	'HUSS', 	'Nelson Mandela', 		'10:00 am - 12:50 pm', 	'TR',		'Summer 2020',	'4 Credits');""")
+  """INSERT INTO USER VALUES('332123', 'BREONNA', 'TAYLOR', '134@BLM.edu', 'arrestthecopsthatkilledbreonnataylor',  'blm','STUDENT');""")
 cursor.execute(
-  """INSERT INTO INSTRUCTOR_SCHEDULE VALUES('Become the Father of Observational Astronomy', 				'31748', 	'BSAS', 	'Galileo Galilei',     '9:30  am - 10:50 am',  'WF',		'Summer 2020',	'4 Credits');""")
+  """INSERT INTO USER VALUES('123456','GEORGE','FLOYD',	'3243@BLM.edu',	'forjustice','INSTRUCTOR');""")
 cursor.execute(
-  """INSERT INTO INSTRUCTOR_SCHEDULE VALUES('Cryptanalysis: Send Me a Message I Cant Decrypt',			'31431', 	'BSCO',		'Alan Turing',				'11:00 am - 12:20 pm',	'WF',		'Summer 2020',	'4 Credits');""")
-cursor.execute(
-  """INSERT INTO INSTRUCTOR_SCHEDULE VALUES('Black Holes Imagery:Getting Yall Out of The Dark',		'31739',	'BCOS',		'Katie Bouman',				'1:00 pm - 2:50 pm',		'MF',		'Summer 2020',	'4 Credits');""")
+  """INSERT INTO USER VALUES('876543', 'MICHAEL', 'JORDAN','23@aj.com',	'mj23','gamble','ADMIN');""")
+
 database.commit()
