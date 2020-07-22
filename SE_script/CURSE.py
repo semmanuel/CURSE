@@ -321,7 +321,7 @@ class Admin(User):
 
     def add_removeCourse(self):
         while True:
-            print("confirm credentials for admin use\n")
+            print("Confirm credentials for admin use\n")
             username = input("Enter your username: \n")
             password = getpass.getpass(prompt="Enter your password: \n", stream=None)
             # Query for login
@@ -335,14 +335,65 @@ class Admin(User):
                     ans = input("Would you like to add or remove a course(1 to add, 2 to remove)? \n")
                     if ans == "1":
                         title = input("Course Title: \n")
+                        while True:
+                            if title=='':
+                                title = input("Title cannot be empty. Course Title: \n")
+                            else:
+                                break
                         crn = input("Course CRN #: \n")
+                        while True:
+                            if crn=='':
+                                    crn = input("CRN cannot be empty. Course CRN: \n")
+                            else:
+                                break
+
                         dept = input("Course Department: \n")
+                        while True:
+                            if dept=='':
+                                    dept = input("Department cannot be empty. Course Department: \n")
+                            else:
+                                break
                         prof = input("Course Professor Name: \n")
+                        while True:
+                            if prof=='':
+                                    prof = prof("Crn cannot be empty. Course Professor Name: \n")
+                            else:
+                                break
+
                         time = input("Course time(e.g 2:00-2:50PM): \n")
+                        while True:
+                            if time=='':
+                                time = input("Time cannot be empty. Course time: \n")
+                            else:
+                                break
                         days = input("Course days of the week(Letters only): \n")
+
+                        while True:
+                            if days==''or days.isdigit():
+                                days = input("Days cannot be empty or non-digits. Course days: \n")
+                            else:
+                                break
                         semester = input("Course Semester: \n")
+
+                        while True:
+                            if semester=='':
+                                semester = input("Semester cannot be empty. Course Semester: \n")
+                            else:
+                                break
                         year = input("Course Year: \n")
+
+                        while True:
+                            if year=='':
+                                year = input("Crn cannot be empty. Course Title: \n")
+                            else:
+                                break
                         credit = input("Credits of Course:\n")
+
+                        while True:
+                            if credit=='':
+                                time = input("Credits cannot be empty. Credits of Course: \n")
+                            else:
+                                break
                         cursor.execute(
                             """INSERT INTO COURSE VALUES('%s', '%s', '%s', '%s','%s', '%s', '%s','%s', '%s');""" % (
                                 title, crn, dept, prof, time, days, semester, year, credit))
