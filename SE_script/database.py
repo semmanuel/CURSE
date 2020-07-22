@@ -182,11 +182,11 @@ cursor.execute(
   """INSERT INTO COURSE VALUES('Black Holes Imagery:Getting Yall Out of The Dark', '31739',	    'BCOS',		'JOSEPH FOURIER',	'1:00 pm - 2:50 pm',		'MF',		'Summer', '2020',	'4 Credits');""")
 
 cursor.execute(
-  """INSERT INTO USER VALUES('364670','ELIJAH', 'MCCAIN', '123@BLM.edu', 'equality123','STUDENT');""")
+  """INSERT INTO USER VALUES('364670','ELIJAH', 'MCCAIN', '123@BLM.edu', 'equality123','pain','STUDENT');""")
 cursor.execute(
   """INSERT INTO USER VALUES('332123', 'BREONNA', 'TAYLOR', '134@BLM.edu', 'arrestthecopsthatkilledbreonnataylor',  'blm','STUDENT');""")
 cursor.execute(
-  """INSERT INTO USER VALUES('123456','GEORGE','FLOYD',	'3243@BLM.edu',	'forjustice','INSTRUCTOR');""")
+  """INSERT INTO USER VALUES('123456','GEORGE','FLOYD',	'3243@BLM.edu',	'forjustice','gonetoosoon','INSTRUCTOR');""")
 cursor.execute(
   """INSERT INTO USER VALUES('876543', 'MICHAEL', 'JORDAN','23@aj.com',	'mj23','gamble','ADMIN');""")
 
