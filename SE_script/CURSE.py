@@ -569,9 +569,6 @@ class Admin(User):
             except IndexError:
                 print("Authorization failed")
 
-    def printRoster(self):
-        print("This is the print roster function")
-
 class Instructor(User):
     def __init__(self, fname, lname, idNum):
         super().__init__(fname, lname, idNum)
