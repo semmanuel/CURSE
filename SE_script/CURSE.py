@@ -623,12 +623,45 @@ def login():
                 elif type != 'STUDENT' or type != 'INSTRUCTOR' or type != 'ADMIN':
                     print("Invalid argument\n")
             fname = input("Enter your first name? \n")
+            while True:
+                if fname=='':
+                    fname = input("First name cannot be empty.Enter your first name? \n")
+                else:
+                    break
+
             lname = input("Enter your last name? \n")
+            while True:
+                if lname=='':
+                    lname = input("Last name cannot be empty.Enter your last name? \n")
+                else:
+                    break
             email = input("Enter your email address? \n")
+            while True:
+                if email=='':
+                    email = input("Email address cannot be empty.Enter email address? \n")
+                else:
+                    break
             id = input("Enter your ID Number? \n")
+            while True:
+                if id=='':
+                    id = input("Id cannot be empty.Enter your ID? \n")
+                else:
+                    break
+
             username = input("Create a username: \n")
             while True:
+                if username=='':
+                    username = input("Username cannot be empty.Enter a username? \n")
+                else:
+                    break
+
+            while True:
                 password = getpass.getpass(prompt="Create your password: \n", stream=None)
+                while True:
+                    if password == '':
+                        password = getpass.getpass(prompt="Password cannot be empty. Create your password: \n", stream=None)
+                    else:
+                        break
                 pw = getpass.getpass(prompt="Re-enter your password: \n", stream=None)
                 if password == pw:
                     cursor.execute(
@@ -641,7 +674,17 @@ def login():
 
         elif acct == "N":
             username = input("Enter your username: \n")
+            while True:
+                if username=='':
+                    username = input("Username cannot be empty.Enter a username? \n")
+                else:
+                    break
             password = getpass.getpass(prompt="Enter your password: \n", stream=None)
+            while True:
+                if password == '':
+                    password = getpass.getpass(prompt="Password cannot be empty. Create your password: \n", stream=None)
+                else:
+                    break
             # Query for login
             cursor.execute(
                 """SELECT ID, NAME, SURNAME, TYPE FROM USER WHERE USERNAME = ('%s') AND PASSWORD = ('%s');""" % (username, password))
