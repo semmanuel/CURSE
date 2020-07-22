@@ -171,23 +171,23 @@ cursor.execute(
 cursor.execute(
     """INSERT INTO COURSE VALUES('DUMMY', 'VARIABLE', 'DUMMY', 'VARIABLE', '8am', 'DUMMY', 'VARIABLE', 'VARIABLE', '');""")
 cursor.execute(
-  """INSERT INTO COURSE VALUES('Rewrite Everything With Sin Functions ',            '31798', 	'BSEE', 	'JOSEPH FOURIER', '12:00 pm - 12:50pm',		'MTR',	'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('Rewrite Everything With Sin Functions ',            '3178', 	'BSEE', 	'JOSEPH FOURIER', '12:00 pm - 12:50pm',		'MTR',	'Summer', '2020',	'4 Credits');""")
 cursor.execute(
-  """INSERT INTO COURSE VALUES('A Winner Is a Dreamer Who Never Gives Up',          '31039', 	'HUSS', 	'NELSON MANDELA', '10:00 am - 12:50 pm', 	'TR',		'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('A Winner Is a Dreamer Who Never Gives Up',          '3139', 	'HUSS', 	'NELSON MANDELA', '10:00 am - 12:50 pm', 	'TR',		'Summer', '2020',	'4 Credits');""")
 cursor.execute(
-  """INSERT INTO COURSE VALUES('Become the Father of Observational Astronomy',      '31748', 	'BSAS', 	'JOSEPH FOURIER', '9:30  am - 10:50 am',  'WF',		'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('Become the Father of Observational Astronomy',      '3148', 	'BSAS', 	'JOSEPH FOURIER', '9:30  am - 10:50 am',  'WF',		'Summer', '2020',	'4 Credits');""")
 cursor.execute(
-  """INSERT INTO COURSE VALUES('Cryptanalysis: Send Me a Message I Cant Decrypt',   '31431', 	'BSCO',		'ALAN TURING',	'11:00 am - 12:20 pm',	'WF',		'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('Cryptanalysis: Send Me a Message I Cant Decrypt',   '3143', 	'BSCO',		'ALAN TURING',	'11:00 am - 12:20 pm',	'WF',		'Summer', '2020',	'4 Credits');""")
 cursor.execute(
-  """INSERT INTO COURSE VALUES('Black Holes Imagery:Getting Yall Out of The Dark', '31739',	    'BCOS',		'JOSEPH FOURIER',	'1:00 pm - 2:50 pm',		'MF',		'Summer', '2020',	'4 Credits');""")
+  """INSERT INTO COURSE VALUES('Black Holes Imagery:Getting Yall Out of The Dark', '3739',	    'BCOS',		'JOSEPH FOURIER',	'1:00 pm - 2:50 pm',		'MF',		'Summer', '2020',	'4 Credits');""")
 
 cursor.execute(
   """INSERT INTO USER VALUES('364670','ELIJAH', 'MCCAIN', '123@BLM.edu', 'equality123','pain','STUDENT');""")
 cursor.execute(
   """INSERT INTO USER VALUES('332123', 'BREONNA', 'TAYLOR', '134@BLM.edu', 'arrestthecopsthatkilledbreonnataylor',  'blm','STUDENT');""")
 cursor.execute(
-  """INSERT INTO USER VALUES('123456','GEORGE','FLOYD',	'3243@BLM.edu',	'forjustice','gonetoosoon','INSTRUCTOR');""")
+  """INSERT INTO USER VALUES('123456','GEORGE','FLOYD',	'3243@BLM.edu',	'forjustice','gonetoosoon','ADMIN');""")
 cursor.execute(
-  """INSERT INTO USER VALUES('876543', 'MICHAEL', 'JORDAN','23@aj.com',	'mj23','gamble','ADMIN');""")
+  """INSERT INTO USER VALUES('876543', 'MICHAEL', 'JORDAN','23@aj.com',	'mj23','gamble','INSTRUCTOR');""")
 
 database.commit()
