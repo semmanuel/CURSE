@@ -569,6 +569,7 @@ class Admin(User):
             except IndexError:
                 print("Authorization failed")
 
+
 class Instructor(User):
     def __init__(self, fname, lname, idNum):
         super().__init__(fname, lname, idNum)
@@ -598,16 +599,18 @@ class Instructor(User):
 
         # Check if student is registered in course, in general
         cursor.execute(
-        """SELECT * FROM STUDENT WHERE STUDENT.NAME = ('%s') AND STUDENT.SURNAME = ('%s');""" %(student_name, student_last_name))
+        """SELECT ID FROM STUDENT WHERE STUDENT.NAME = ('%s') AND STUDENT.SURNAME = ('%s');""" %(student_name, student_last_name))
         query_result = cursor.fetchall()
 
         # if query_result is not empty then it means that there is
         if query_result !=[]:
+            sid = query_result[0]
             cursor.execute(
-            """SELECT *  FROM ROSTER, STUDENT WHERE STUDENT.ID = ROSTER.ID ;""" )
+            """SELECT CRN FROM ROSTER WHERE ID=('%s');""" %(sid))
             query_result1=cursor.fetchall()
             if query_result1!=[]:# compare the ID's if not empty then print the student from first query
-                for i in query_result:
+                print("CRN for Course Roster:")
+                for i in query_result1:
                     print(i)
         else:
             print("Student does not attend institution\n")
@@ -782,7 +785,7 @@ def main ():
         elif (TYPE == 'INSTRUCTOR'):
             instructor = Instructor(first_name, last_name, idNumber)
             while True:
-                option = input('Would you like to 1) print schedule, 2) print roster, 3) assemble roster 4) Search all courses 5) Search Course by parameter 6) Search for Roster  7)Log out: \n')
+                option = input('Would you like to 1) print schedule, 2) print roster, 3) assemble roster 4) Search all courses 5) Search Course by parameter 6) Search Roster  7)Log out: \n')
 
                 if option == '1':
                     instructor.printSchedule()
